@@ -3,6 +3,7 @@
   import { onMount, tick } from 'svelte';
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
+  import { base } from '$app/paths';
 
   dayjs.extend(relativeTime);
 
@@ -71,7 +72,10 @@
               <div class="flex items-center">
                 <div class="avatar">
                   <div class="w-8 mx-2">
-                    <img src="/animals/{message.author.split(' ').slice(1).join('-')}.png" alt="" />
+                    <img
+                      src="{base}/animals/{message.author.split(' ').slice(1).join('-')}.png"
+                      alt=""
+                    />
                   </div>
                 </div>
                 <span class="author mx-1 font-bold">{message.author}</span>

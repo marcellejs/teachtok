@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { type User, getScores } from '$lib/marcelle';
   import { store } from '$lib/marcelle';
 
@@ -8,7 +9,7 @@
 <div class="card w-96 bg-base-100 shadow-xl">
   <figure>
     <div class="w-24">
-      <img src="/crown.png" class="w-24 h-24" alt="" />
+      <img src="{base}/crown.png" class="w-24 h-24" alt="" />
     </div>
   </figure>
   <div class="card-body">

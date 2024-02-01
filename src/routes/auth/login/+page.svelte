@@ -1,11 +1,12 @@
 <script context="module">
   import { store } from '$lib/marcelle/store';
+  import { base } from '$app/paths';
 
   /** @type {import('./[slug]').Load} */
   export async function load() {
     try {
       await store.connect();
-      return { status: 302, redirect: '/app/' };
+      return { status: 302, redirect: `${base}/app/` };
     } catch (error) {
       return {};
     }
@@ -24,7 +25,7 @@
     store
       .login(formData.get('email').toString(), formData.get('password').toString())
       .then(() => store.connect())
-      .then(() => goto('/app/'))
+      .then(() => goto(`${base}/app/`))
       .catch((error) => {
         err = error;
       });

@@ -7,6 +7,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { store, metaCVModel, $accuracy as accuracy, trainingUpToDate } from '$lib/marcelle';
+  import { base } from '$app/paths';
 
   export let user: { avatar: string; name: string };
 
@@ -47,7 +48,7 @@
     .hold();
 
   function signout() {
-    goto('/').then(() => {
+    goto(`${base}/`).then(() => {
       store.logout();
     });
   }

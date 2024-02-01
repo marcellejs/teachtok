@@ -12,8 +12,8 @@ const config = {
       fallback: 'index.html',
     }),
     paths: {
-      base: '',
-      // base: '/teachtok',
+      // base: '',
+      base: '/teachtok',
     },
   },
 };

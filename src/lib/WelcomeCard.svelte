@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { collectiveAccuracy, newData, type User } from '$lib/marcelle';
   import { store } from '$lib/marcelle';
   import AccuracyBadge from './AccuracyBadge.svelte';
@@ -27,8 +28,8 @@
       <ClassesBadge />
     </div>
     <div class="flex flex-row gap-2 justify-start mt-4">
-      <a class="btn btn-secondary btn-sm" href="/app/dataset">See the Library</a>
-      <a class="btn btn-secondary btn-sm" href="/app/teach">Teach</a>
+      <a class="btn btn-secondary btn-sm" href="{base}/app/dataset">See the Library</a>
+      <a class="btn btn-secondary btn-sm" href="{base}/app/teach">Teach</a>
     </div>
   </div>
 </div>

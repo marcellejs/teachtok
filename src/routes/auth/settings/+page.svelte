@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import type { User } from '$lib/marcelle/store';
 
   /** @type {import('./$types').LayoutData} */
@@ -71,7 +72,7 @@
       </div>
     </div>
   {/if}
-  <img src="/animals/{user.avatar}" alt="" style="width:150px; height:150px; padding: 0" />
+  <img src="{base}/animals/{user.avatar}" alt="" style="width:150px; height:150px; padding: 0" />
   <div class="form-control w-full">
     <label class="label" for="name">
       <span class="label-text">name</span>
