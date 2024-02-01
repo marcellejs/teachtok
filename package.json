@@ -1,0 +1,54 @@
+{
+  "name": "teachtok",
+  "description": "A Marcelle Application with SvelteKit",
+  "version": "0.0.0",
+  "keywords": [
+    "marcelle"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write .",
+    "backend": "marcelle-backend"
+  },
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@marcellejs/backend": "^0.6.4",
+    "@marcellejs/core": "^0.6.1",
+    "dayjs": "^1.11.10",
+    "fuzzysort": "^2.0.4",
+    "html2canvas": "^1.4.1",
+    "seedrandom": "^3.0.5",
+    "svelte-fa": "^2"
+  },
+  "devDependencies": {
+    "@marcellejs/design-system": "^0.6.1",
+    "@marcellejs/devtools": "^0.6.1",
+    "@sveltejs/adapter-static": "^2.0.1",
+    "@sveltejs/kit": "^1.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "autoprefixer": "^10.4.17",
+    "daisyui": "^3.9.4",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.1.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "postcss": "^8.4.33",
+    "prettier": "^2.7.1",
+    "svelte": "^3.55.1",
+    "svelte-check": "^3.0.4",
+    "svelte-preprocess": "^5.0.1",
+    "tailwindcss": "^3.4.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "database": "mongodb",
+  "nedb": "../data",
+  "uploads": "../uploads",
+  "mongodb": "mongodb://127.0.0.1:27017/teachtok",
+  "gridfs": true,
+  "whitelist": {
+    "services": "*",
+    "assets": [
+      "jpg",
+      "jpeg",
+      "png",
+      "wav"
+    ]
+  },
+  "paginate": {
+    "default": 100,
+    "max": 1000
+  },
+  "authentication": {
+    "enabled": true,
+    "entity": "user",
+    "service": "users",
+    "allowSignup": false,
+    "secret": "ZjXdk3pXZLVpvcEMGGuh6LYdi9o=",
+    "authStrategies": [
+      "jwt",
+      "local"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  },
+  "permissions": {
+    "superadmin": [
+      {
+        "action": "manage",
+        "subject": "all"
+      }
+    ],
+    "admin": [
+      {
+        "action": "manage",
+        "subject": "all",
+        "conditions": {
+          "userId": "${user._id}"
+        }
+      },
+      {
+        "action": "manage",
+        "subject": "all",
+        "conditions": {
+          "public": "${true}"
+        }
+      },
+      {
+        "action": "manage",
+        "subject": "users"
+      }
+    ],
+    "editor": [
+      {
+        "action": "manage",
+        "subject": "all",
+        "conditions": {
+          "userId": "${user._id}"
+        }
+      },
+      {
+        "action": "manage",
+        "subject": "all",
+        "conditions": {
+          "public": "${true}"
+        }
+      },
+      {
+        "action": "read",
+        "subject": "users"
+      },
+      {
+        "action": "update",
+        "subject": "users",
+        "conditions": {
+          "_id": "${user._id}"
+        }
+      },
+      {
+        "action": "delete",
+        "subject": "users",
+        "conditions": {
+          "_id": "${user._id}"
+        },
+        "inverted": "true"
+      }
+    ]
+  }
+}
