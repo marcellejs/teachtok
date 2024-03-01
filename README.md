@@ -1,6 +1,8 @@
-# ~TODO~
+TeachTOK is a collaborative interactive machine teaching prototype of [Marcelle](https://marcelle.dev) toolkit for image classification task. 
 
-> A [Marcelle](https://marcelle.dev) Application
+> link to the paper: to be published.
+
+> link to the demo: https://marcelle.lisn.upsaclay.fr/teachtok/ 
 
 ## Available Scripts
 
