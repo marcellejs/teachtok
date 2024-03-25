@@ -12,7 +12,9 @@
   <figure>
     <div class="w-24">
       <img
-        src={user?.avatar || 'https://api.lorem.space/image/face?hash=33791'}
+        src={user?.avatar
+          ? `${base}/animals/${user?.avatar}`
+          : 'https://api.lorem.space/image/face?hash=33791'}
         class="w-24 h-24"
         alt=""
       />

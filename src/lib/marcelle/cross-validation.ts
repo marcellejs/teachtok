@@ -6,6 +6,7 @@ import { allTrainingData, type ImageInstance } from './datasets';
 
 const nFolds = 3;
 export const metaCVModel = ensembleClassifier({ k: nFolds });
+metaCVModel.sync(store, 'my-classifier');
 
 export const cvBatch = batchPrediction('cv', store);
 

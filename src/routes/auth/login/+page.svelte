@@ -15,17 +15,26 @@
 
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { get } from 'svelte/store';
+  import { onMount } from 'svelte';
+
+  let username = get(page).url.searchParams?.get('username') || '';
+  let isMobile = !!get(page).url.searchParams?.get('mobile') || false;
+  // $: username = $page.url.searchParams?.get('username') || '';
+  $: email = username.split(' ').join('.') + '@marcelle.dev';
+  $: console.log('username', username);
+  $: console.log('isMobile', isMobile);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let err: any;
 
   function login(e) {
     err = null;
-    const formData = new FormData(e.target);
     store
-      .login(formData.get('email').toString(), formData.get('password').toString())
+      .login(email, 'blablablabla')
       .then(() => store.connect())
-      .then(() => goto(`${base}/app/`))
+      .then(() => goto(isMobile ? `${base}/mobile/` : `${base}/app/`))
       .catch((error) => {
         err = error;
       });
@@ -59,6 +68,18 @@
   {/if}
   <form on:submit|preventDefault={login}>
     <div class="form-control w-full">
+      <label class="label" for="name">
+        <span class="label-text">Enter your name</span>
+      </label>
+      <input
+        type="text"
+        name="name"
+        placeholder="Type here"
+        class="input input-bordered w-full"
+        bind:value={username}
+      />
+    </div>
+    <div class="form-control w-full">
       <label class="label" for="email">
         <span class="label-text">Enter your email</span>
       </label>
@@ -67,6 +88,8 @@
         name="email"
         placeholder="Type here"
         class="input input-bordered w-full"
+        value={email}
+        disabled
       />
     </div>
     <div class="form-control w-full">
@@ -79,6 +102,8 @@
         placeholder="Type here"
         class="input input-bordered w-full"
         minlength="8"
+        disabled
+        value="blablablabla"
       />
     </div>
     <button class="btn bordered btn-primary" type="submit">Log In</button>
