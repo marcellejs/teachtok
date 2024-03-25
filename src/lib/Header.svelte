@@ -136,16 +136,15 @@
         <label tabindex="0" class="btn btn-ghost btn-circle avatar" for="">
           <div class="w-10 rounded-full">
             <img
-              src={user?.avatar || 'https://api.lorem.space/image/face?hash=33791'}
+              src={user?.avatar
+                ? `${base}/animals/${user?.avatar}`
+                : 'https://api.lorem.space/image/face?hash=33791'}
               alt="profile pic"
             />
           </div>
         </label>
-        <ul
-          tabindex="0"
-          class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          <li><a href="/settings">Settings</a></li>
+        <ul class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="{base}/settings">Settings</a></li>
           <li><button on:click={signout}>Logout</button></li>
         </ul>
       </div>

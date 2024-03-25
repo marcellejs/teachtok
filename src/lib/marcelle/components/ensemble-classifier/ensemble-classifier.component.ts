@@ -19,7 +19,7 @@ function arrayAverage(arr: number[]): number {
 }
 
 function likeliest(confidences: Record<string, number>): string {
-  let label: string;
+  let label = '';
   let crtMax = 0;
   for (const [key, val] of Object.entries(confidences)) {
     if (val > crtMax) {
@@ -53,7 +53,7 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
     units: Stream<number[]>;
   } & TFJSCustomClassifier['parameters'];
 
-  models: MLPClassifier[];
+  models: MLPClassifier[] = [];
 
   constructor({
     k = 3,
@@ -64,10 +64,10 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
     super();
     this.k = k;
     this.parameters = {
+      ...this.parameters,
       units: new Stream(units, true),
       epochs: new Stream(epochs, true),
       batchSize: new Stream(batchSize, true),
-      ...this.parameters,
     };
   }
 
@@ -160,18 +160,18 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
   }
 
   save(): never {
-    throw new Error('MobileNet does not support saving');
+    throw new Error('EnsembleClassifier does not support saving');
   }
 
   load(): never {
-    throw new Error('MobileNet does not support loading');
+    throw new Error('EnsembleClassifier does not support loading');
   }
 
   download(): never {
-    throw new Error('MobileNet does not support downloading');
+    throw new Error('EnsembleClassifier does not support downloading');
   }
 
   upload(): never {
-    throw new Error('MobileNet does not support uploading');
+    throw new Error('EnsembleClassifier does not support uploading');
   }
 }

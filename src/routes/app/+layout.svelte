@@ -1,11 +1,9 @@
 <script>
-  console.log('Importing...');
   import Header from '$lib/Header.svelte';
   import Sidebar from '$lib/Sidebar.svelte';
 
   /** @type {import('./$types').LayoutData} */
   export let data;
-  console.log('Here...', data);
 </script>
 
 <div class="drawer lg:drawer-open">

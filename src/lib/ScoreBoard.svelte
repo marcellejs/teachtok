@@ -23,7 +23,9 @@
                 <div class="avatar online">
                   <div class="w-16 rounded-full">
                     <img
-                      src={user?.avatar || 'https://api.lorem.space/image/face?hash=33791'}
+                      src={user?.avatar
+                        ? `${base}/animals/${user?.avatar}`
+                        : 'https://api.lorem.space/image/face?hash=33791'}
                       alt=""
                     />
                   </div>

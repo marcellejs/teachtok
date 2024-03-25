@@ -3,16 +3,16 @@
   "port": "PORT",
   "mongodb": "MONGODB_URL",
   "whitelist": {
-      "services": [
-          "instances-comments",
-          "instances-log",
-          "instances-training-set",
-          "predictions-cv",
-          "tfjs-models"
-      ],
-      "assets": ["jpg", "jpeg", "png", "wav"]
+    "services": [
+      "instances-comments",
+      "instances-log",
+      "instances-training-set",
+      "predictions-cv",
+      "tfjs-models"
+    ],
+    "assets": ["jpg", "jpeg", "png", "wav"]
   },
   "authentication": {
-      "secret": "AUTH_SECRET"
+    "secret": "AUTH_SECRET"
   }
 }

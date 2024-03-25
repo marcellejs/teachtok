@@ -89,8 +89,8 @@
       <a class="btn btn-secondary" href="{base}/app/">Go to the app</a>
     {:else}
       <a class="btn btn-secondary" href="{base}/auth/login">Log In</a>
-    {/if}
-    {#if data?.user?.role === 'admin'}
+      <!-- {/if}
+    {#if data?.user?.role === 'admin'} -->
       <a class="btn btn-primary" href="{base}/auth/signup">Create an Account</a>
     {/if}
     {#if data?.user}

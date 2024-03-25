@@ -36,7 +36,7 @@ dependencies:
 devDependencies:
   '@marcellejs/design-system':
     specifier: ^0.6.1
-    version: 0.6.4(svelte@3.59.2)
+    version: link:../../marcelle/packages/design-system
   '@marcellejs/devtools':
     specifier: ^0.6.1
     version: 0.6.4
@@ -46,6 +46,9 @@ devDependencies:
   '@sveltejs/kit':
     specifier: ^1.8.3
     version: 1.30.3(svelte@3.59.2)(vite@4.5.2)
+  '@types/seedrandom':
+    specifier: ^3.0.8
+    version: 3.0.8
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.39.0
     version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.56.0)(typescript@4.9.5)
@@ -284,6 +287,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
+    dev: false
 
   /@babel/template@7.23.9:
     resolution: {integrity: sha512-+xrD2BWLpvHKNmX2QbpdpsBaWnRxahMwJjO+KZk2JOElj5nSmKezyS1B4u+QbHMTX69t4ukm6hh9lsYQ7GHCKA==}
@@ -675,6 +679,7 @@ packages:
   /@feathersjs/commons@4.5.16:
     resolution: {integrity: sha512-FXKAcGApcd9w3M42gjLi8+oaPijabS8qbD4ynQK3PM8J7BqpbSdCzURsI7EpReoQxFxdhrR4jix8cQIC/iAeuw==}
     engines: {node: '>= 10'}
+    dev: false
 
   /@feathersjs/configuration@4.5.17:
     resolution: {integrity: sha512-xPP45i6qMnrD+Vhk0YXYgPUJM7TRK3bZN3+FThDmvZ7LNenwgng3Lm1GqMbZqKPVGVPRpPU/Hlb2tIqbh5kYTQ==}
@@ -721,6 +726,7 @@ packages:
       uberproto: 2.0.6
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@feathersjs/socketio-client@4.5.18:
     resolution: {integrity: sha512-ycM2NXX6gEO5VDbT+oRR8HPROA7MgBEO6Y5caEkIqneoPbPUPGeF7HNr6JmObbyC1gjzMPrSQl8Vra3D2Q3G8A==}
@@ -947,18 +953,6 @@ packages:
       - supports-color
       - utf-8-validate
     dev: false
-
-  /@marcellejs/design-system@0.6.4(svelte@3.59.2):
-    resolution: {integrity: sha512-Pmzpb93bgQJKiNYeL4+nynuFc1bTQxLfv8+eDIKDgarZnVEpS2KRltGKQNh4iiMXzlh6IiBiTYrQbAHkkeRswQ==}
-    peerDependencies:
-      svelte: ^3.54.0
-    dependencies:
-      '@feathersjs/feathers': 4.5.17
-      date-fns: 2.30.0
-      svelte: 3.59.2
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /@marcellejs/devtools@0.6.4:
     resolution: {integrity: sha512-CWjWxWIT8TPNg1GKZ2NyzFEsT6EwmgJ2QrTNJ6s3uME1PVng1n0TUhQoNjKfjKK4ALE98Mei6KRtHvxuRKzy/g==}
@@ -1575,6 +1569,10 @@ packages:
   /@types/seedrandom@2.4.34:
     resolution: {integrity: sha512-ytDiArvrn/3Xk6/vtylys5tlY6eo7Ane0hvcx++TKo6RxQXuVfW0AF/oeWqAj9dN29SyhtawuXstgmPlwNcv/A==}
     dev: false
+
+  /@types/seedrandom@3.0.8:
+    resolution: {integrity: sha512-TY1eezMU2zH2ozQoAFAQFOPpvP15g+ZgSfTZt31AUUH/Rxtnz3H+A/Sv1Snw2/amp//omibc+AEkTaA8KUeOLQ==}
+    dev: true
 
   /@types/semver@7.5.6:
     resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
@@ -2501,6 +2499,7 @@ packages:
     engines: {node: '>=0.11'}
     dependencies:
       '@babel/runtime': 7.23.9
+    dev: false
 
   /dayjs@1.11.10:
     resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
@@ -3105,6 +3104,7 @@ packages:
   /events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
+    dev: false
 
   /express-session@1.18.0:
     resolution: {integrity: sha512-m93QLWr0ju+rOwApSsyso838LQwgfs44QtOP/WBiwtAgPIo/SAh1a5c6nn2BR6mFNZehTpqKDESzP+fRHVbxwQ==}
@@ -5099,6 +5099,7 @@ packages:
 
   /regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
+    dev: false
 
   /regexp.prototype.flags@1.5.1:
     resolution: {integrity: sha512-sy6TXMN+hnP/wMy+ISxg3krXx7BAtWVO4UouuCN/ziM9UEne0euamVNafDfvC83bRNr95y0V5iijeDQFUNpvrg==}
@@ -6083,6 +6084,7 @@ packages:
 
   /uberproto@2.0.6:
     resolution: {integrity: sha512-68H97HffZoFaa3HFtpstahWorN9dSp5uTU6jo3GjIQ6JkJBR3hC2Nx/e/HFOoYHdUyT/Z1MRWfxN1EiQJZUyCQ==}
+    dev: false
 
   /uid-safe@2.1.5:
     resolution: {integrity: sha512-KPHm4VL5dDXKz01UuEd88Df+KzynaohSL9fBh096KWAxSKZQDI2uBrVqtvRM4rwrIrRRKsdLNML/lnaaVSRioA==}

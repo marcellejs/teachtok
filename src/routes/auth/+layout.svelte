@@ -2,8 +2,6 @@
   import { page } from '$app/stores';
 
   let bc = [{ name: 'Home', href: '/' }];
-  console.log('$page.url.pathname', $page.url.pathname);
-  console.log('$page.url.pathname.split( / ).slice(1)', $page.url.pathname.split('/').slice(1));
   for (const p of $page.url.pathname
     .split('/')
     .slice(1)
