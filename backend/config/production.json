@@ -8,7 +8,8 @@
       "instances-log",
       "instances-training-set",
       "predictions-cv",
-      "tfjs-models"
+      "tfjs-models",
+      "ensemble-models"
     ],
     "assets": ["jpg", "jpeg", "png", "wav"]
   },
