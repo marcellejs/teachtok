@@ -20,22 +20,11 @@
   import { onMount } from 'svelte';
 
   let username = get(page).url.searchParams?.get('username') || '';
+  let isMobile = !!get(page).url.searchParams?.get('mobile') || false;
   // $: username = $page.url.searchParams?.get('username') || '';
   $: email = username.split(' ').join('.') + '@marcelle.dev';
   $: console.log('username', username);
-
-  // async function init() {
-  //   // await store.connect();
-  //   console.log('LALALOLO');
-  //   try {
-  //     const latestUsers = await store.service('users').find();
-  //     console.log('latestUsers', latestUsers);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // onMount(init);
+  $: console.log('isMobile', isMobile);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let err: any;
@@ -45,7 +34,7 @@
     store
       .login(email, 'blablablabla')
       .then(() => store.connect())
-      .then(() => goto(`${base}/app/`))
+      .then(() => goto(isMobile ? `${base}/mobile/` : `${base}/app/`))
       .catch((error) => {
         err = error;
       });
