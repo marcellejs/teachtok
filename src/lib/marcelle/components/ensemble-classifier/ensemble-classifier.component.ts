@@ -4,6 +4,9 @@ import type {
   TFJSCustomClassifierOptions,
   ClassifierResults,
   MLPClassifier,
+  DataStore,
+  ObjectId,
+  StoredModel,
 } from '@marcellejs/core';
 import { Model, iterableFromArray, mlpClassifier, Stream } from '@marcellejs/core';
 import seedrandom from 'seedrandom';
@@ -47,7 +50,7 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
   k: number;
   ready = false;
 
-  serviceName = 'tfjs-models';
+  serviceName = 'ensemble-models';
 
   parameters: {
     units: Stream<number[]>;
@@ -64,7 +67,6 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
     super();
     this.k = k;
     this.parameters = {
-      ...this.parameters,
       units: new Stream(units, true),
       epochs: new Stream(epochs, true),
       batchSize: new Stream(batchSize, true),
@@ -117,7 +119,7 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
     this.ready = true;
   }
 
-  async trainFold(trainData, i) {
+  async trainFold(trainData: ImageInstance[], i: number) {
     return new Promise<void>((resolve, reject) => {
       this.models[i].train(iterableFromArray(trainData));
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -128,10 +130,11 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
           this.$training.set({ status, data });
           reject();
         } else if (status === 'epoch') {
+          const e = epochs || 1;
           this.$training.set({
             status: 'epoch',
-            epoch: epochs * i + epoch,
-            epochs: epochs * this.k,
+            epoch: e * i + (epoch || 0),
+            epochs: e * this.k,
           });
         } else if (status === 'success') {
           unSub();
@@ -142,7 +145,7 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
   }
 
   async predict(x: ImageInstance['x']): Promise<ClassifierResults> {
-    if (!this.models) return null;
+    if (!this.models) return { label: '', confidences: {} };
 
     const preds = await Promise.all(this.models.map((m) => m.predict(x)));
     const allConfidences: Record<string, number[]> = {};
@@ -159,12 +162,56 @@ export class EnsembleClassifier extends Model<ImageInstance, ClassifierResults> 
     return { label: likeliest(confidences), confidences };
   }
 
-  save(): never {
-    throw new Error('EnsembleClassifier does not support saving');
+  async save(
+    store: DataStore,
+    name: string,
+    metadata?: Record<string, unknown>,
+    id: ObjectId | null = null,
+  ): Promise<ObjectId | null> {
+    if (!this.models) return null;
+    const ids = await Promise.all(
+      this.models.map((m, i) => m.save(store, `${name}-${i}`, metadata)),
+    );
+
+    const storedModel: StoredModel = {
+      name,
+      files: ids.map((x, i) => [`${name}-${i}`, x]),
+      format: 'teachtok-ensemble',
+    };
+    return this.saveToDatastore(store, storedModel, id as ObjectId);
   }
 
-  load(): never {
-    throw new Error('EnsembleClassifier does not support loading');
+  async load(store: DataStore, idOrName: ObjectId | string): Promise<StoredModel> {
+    if (!idOrName) return null;
+    this.$training.set({
+      status: 'loading',
+    });
+    this.ready = false;
+    try {
+      const storedModel = await this.loadFromDatastore(store, idOrName);
+      this.k = storedModel.files.length;
+      this.models = Array.from(Array(this.k), () => mlpClassifier());
+      for (const [i, [name, id]] of storedModel.files.entries()) {
+        console.log('ensemble.load', i, name, id);
+        await this.models[i].load(store, id);
+      }
+
+      this.$training.set({
+        status: 'loaded',
+        data: {
+          source: 'datastore',
+          url: store.location,
+        },
+      });
+      return storedModel;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('[tfjs-model] Loading error', error);
+      this.$training.set({
+        status: 'error',
+      });
+      throw error;
+    }
   }
 
   download(): never {
