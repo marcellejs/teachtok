@@ -31,13 +31,13 @@
     <div class="flex flex-col items-stretch">
       <WelcomeCard />
       <div class="card w-96 bg-base-100 shadow-xl flex items-center justify-center">
-        <!-- <a
+        <a
           href="{base}/auth/login?username={user.email.split('@')[0].split('.').join(' ')}&mobile=1"
           >https://marcelle.lisn.upsaclay.fr{base}/auth/login?username={user.email
             .split('@')[0]
             .split('.')
             .join(' ')}&mobile=1</a
-        > -->
+        >
         <h3 class="font-bold mb-2">Connect your mobile:</h3>
         <div bind:this={qrelt}></div>
       </div>

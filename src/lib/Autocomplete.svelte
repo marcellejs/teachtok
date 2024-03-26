@@ -1,4 +1,5 @@
 <script lang="ts">
+  //@ts-nocheck
   import fuzzysort from 'fuzzysort';
   import { createEventDispatcher } from 'svelte';
 

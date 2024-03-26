@@ -13,6 +13,9 @@ import { crossValidation, metaCVModel } from './cross-validation';
 import { myTrainingData } from './datasets';
 import { logEvent } from './log';
 import { store, type User } from './store';
+import { customChart } from './components';
+
+export const chart = customChart(); //must improve this one !
 
 export const inputMobile = webcam();
 inputMobile.$images.subscribe(() => {
@@ -27,11 +30,13 @@ input.$images.subscribe(() => {
 const featureExtractor = mobileNet();
 
 const $images = new Stream(input.$images, true);
+// @ts-ignore
 export const inputDisplay = imageDisplay($images);
 
 const $imagesMobile = new Stream(inputMobile.$images, true);
 
-export const src = imageUpload({ width: 224, height: 224})
+export const src = imageUpload({ width: 224, height: 224});
+// @ts-ignore
 export const displayMobile = imageDisplay(src.$images);
 
 export const label = textInput();
@@ -59,6 +64,8 @@ const $predictionsMobile = $imagesMobile
   .awaitPromises();
 $predictionsMobile.subscribe((pred) => {
   logEvent('prediction', pred);
+  //console.log("prediction is: " + JSON.stringify(pred));
+  chart.updatePred(pred);
 });
 
 export const myConfidences = confidencePlot($myPredictions);
@@ -88,7 +95,7 @@ capture.$click
     });
   });
 
-  captureMobile.$click
+captureMobile.$click
   .sample(src.$images.zip((t, i) => [i, t], src.$thumbnails))
   .map(async ([img, thumbnail]) => ({
     x: await featureExtractor.process(img),

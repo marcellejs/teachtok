@@ -12,6 +12,7 @@
     comments,
     store,
     label,
+    chart,
   } from '$lib/marcelle';
   import { logEvent } from '$lib/marcelle/log';
   import { marcelle } from '$lib/utils';
@@ -79,26 +80,29 @@
     <div class="conf-row flex-col md:flex-col" bind:this={screenshotElt}>
       <div class="conf-col">
         <div class="card max-w-full">
-          <!--half-->
-          <div class="m-4" use:marcelle={inputMobile} />
+          <div class="m-2" use:marcelle={inputMobile} />
         </div>
       </div>
-      <div class="card" use:marcelle={confidencesMobile} />
-    </div>
-    <div class="mt-4 mb-4 flex flex-row">
-      <div class="conf-row">
-        <button
-          class="btn btn-primary"
-          on:click={() => {
-            showShareData = true;
-          }}
-        >
-          Add to Dataset
-        </button>
+      <div class="mb-4 flex flex-row">
+        <div class="conf-row">
+          <button
+            class="btn btn-primary"
+            on:click={() => {
+              showShareData = true;
+            }}
+          >
+            Add to Dataset
+          </button>
+        </div>
+        <div class="conf-row">
+          <button class="btn btn-primary" on:click={openInsightModal}> Share with Group </button>
+        </div>
       </div>
-      <div class="conf-row">
-        <button class="btn btn-primary" on:click={openInsightModal}> Share with Group </button>
-      </div>
+      <!--scaling the chart to 0.5 and putting the buttons in-between camera & chart is the most fastforward solution-->
+      <div class="chart" use:marcelle={confidencesMobile} />
+
+      <!--creating a custome component to display the predictions differently might be more nice looking (not even sure)-->
+      <!--<div class="my-chart" use:marcelle={chart} />-->
     </div>
     {#if showShareData}
       <ModalMobile
@@ -122,9 +126,9 @@
               invalid={!categories.includes($currentLabel)}
             />
             <div class="modal-row">
+              <!--disabled={!categories.includes($currentLabel)}-->
               <button
                 class="btn btn-secondary"
-                disabled={!categories.includes($currentLabel)}
                 on:click={() => captureMobile.$click.set(undefined)}
               >
                 Add Instance
@@ -198,6 +202,11 @@
 
   .card {
     flex-grow: 1;
+  }
+  .chart {
+    margin-top: -20%;
+    scale: 0.6;
+    margin-bottom: -20%;
   }
 
   .conf-col {
