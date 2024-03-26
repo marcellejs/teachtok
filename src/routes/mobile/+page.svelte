@@ -14,12 +14,14 @@
     label,
     chart,
   } from '$lib/marcelle';
+  import { base } from '$app/paths';
   import { logEvent } from '$lib/marcelle/log';
   import { marcelle } from '$lib/utils';
   import ModalMobile from '$lib/ModalMobile.svelte';
   import Modal from '$lib/Modal.svelte';
   import html2canvas from 'html2canvas';
   import { onMount } from 'svelte';
+  import FloatButton from '$lib/FloatButton.svelte';
 
   let screenshotElt;
   let screenshotImg;
@@ -183,6 +185,7 @@
       </Modal>
     {/if}
   </div>
+  <FloatButton href="{base}/mobile/chat/" img="{base}/mobile/chat.png" />
 </section>
 
 <style>
@@ -204,9 +207,9 @@
     flex-grow: 1;
   }
   .chart {
-    margin-top: -20%;
+    /*margin-top: -20%;*/
+    margin-top: -80px;
     scale: 0.6;
-    margin-bottom: -20%;
   }
 
   .conf-col {
