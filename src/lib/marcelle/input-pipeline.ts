@@ -72,7 +72,7 @@ export const myConfidences = confidencePlot($myPredictions);
 myConfidences.title = 'Predictions (My Model)';
 
 export const confidencesMobile = confidencePlot($predictionsMobile);
-confidencesMobile.title = 'Predictions (My Model)';
+confidencesMobile.title = "Model's Predictions";
 
 capture.$click
   .sample($images.zip((t, i) => [i, t], input.$thumbnails))

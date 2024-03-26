@@ -82,7 +82,7 @@
     <div class="conf-row flex-col md:flex-col" bind:this={screenshotElt}>
       <div class="conf-col">
         <div class="card max-w-full">
-          <div class="m-2" use:marcelle={inputMobile} />
+          <div class="notitle m-2" use:marcelle={inputMobile} />
         </div>
       </div>
       <div class="mb-4 flex flex-row">
@@ -118,9 +118,8 @@
         <div style="padding: 1rem;">
           <div class="modal-header">Which label for this image ?</div>
           <div style="padding: 1rem">
-            <div class="modal-image" use:marcelle={displayMobile} />
+            <div class="modal-image mb-4" use:marcelle={displayMobile} />
             <Autocomplete
-              options={categories}
               inputValue={$currentLabel}
               on:value={({ detail }) => {
                 label.$value.set(detail);
@@ -149,7 +148,7 @@
       </ModalMobile>
     {/if}
     {#if showShareInsight}
-      <Modal
+      <ModalMobile
         on:quit={() => {
           showShareInsight = false;
         }}
@@ -182,10 +181,10 @@
             </div>
           </div>
         </div>
-      </Modal>
+      </ModalMobile>
     {/if}
   </div>
-  <FloatButton href="{base}/mobile/chat/" img="{base}/mobile/chat.png" />
+  <FloatButton href="{base}/mobile/chat/" img="{base}/mobile/chat.svg" />
 </section>
 
 <style>

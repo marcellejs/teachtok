@@ -14,7 +14,8 @@
     position: fixed;
     bottom: 20px;
     left: 20px; /* Adjust the left position according to your preference */
-    background-color: #4caf50;
+    /*background-color: burlywood;*/
+    background-color: gold;
     color: white;
     border: none;
     border-radius: 50%;
@@ -28,11 +29,6 @@
     justify-content: center;
     transition: all 0.3s ease-in-out;
     text-decoration: none; /* Add this to remove underline from the link */
-  }
-
-  .floating-btn:hover {
-    background-color: #45a049;
-    transform: scale(1.1);
   }
   .icon {
     width: 50%;

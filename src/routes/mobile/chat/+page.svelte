@@ -1,5 +1,5 @@
 <script>
-  import { activity } from '$lib/marcelle/components';
+  import { activityMobile } from '$lib/marcelle/components';
   import { comments, newMessages, store } from '$lib/marcelle';
   import { marcelle } from '$lib/utils';
   import { onMount } from 'svelte';
@@ -7,7 +7,7 @@
   import FloatButton from '$lib/FloatButton.svelte';
   import { base } from '$app/paths';
 
-  const act = activity(comments, store);
+  const act = activityMobile(comments, store); //Should change this to a mobile friendly version ??
 
   onMount(() => {
     localStorage.setItem('lastChatViewed', new Date(Date.now()).toISOString());
@@ -24,7 +24,7 @@
   <div class="conf-row">
     <div class="card" use:marcelle={act} />
   </div>
-  <FloatButton href="{base}/mobile/" img="{base}/mobile/camera.png" />
+  <FloatButton href="{base}/mobile/" img="{base}/mobile/camera.svg" />
 </section>
 
 <style>

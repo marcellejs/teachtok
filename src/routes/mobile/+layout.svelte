@@ -8,6 +8,7 @@
 </script>
 
 <div>
-  <HeaderMobile user={data?.user} />
+  <!-- removing the navbar doesn't makes more space (the webcam ViewContainer title was just hidden)-->
+  <!--<HeaderMobile user={data?.user} />-->
   <slot />
 </div>
