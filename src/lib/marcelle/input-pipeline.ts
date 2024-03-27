@@ -10,7 +10,7 @@ import {
   textInput,
 } from '@marcellejs/core';
 import { crossValidation, metaCVModel } from './cross-validation';
-import { myTrainingData } from './datasets';
+import { allTrainingData, collectiveTrainingData, myTrainingData } from './datasets';
 import { logEvent } from './log';
 import { store, type User } from './store';
 import { customChart } from './components';

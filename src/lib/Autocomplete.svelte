@@ -5,7 +5,6 @@
 
   export let options = [];
   export let inputValue = '';
-  export let invalid = false;
   let selection = options;
   let showOptions = false;
 
@@ -28,7 +27,6 @@
   <div class="dropdown w-full">
     <input
       class="input input-bordered w-full"
-      class:input-error={invalid}
       type="text"
       placeholder="Search Labels"
       bind:value={inputValue}

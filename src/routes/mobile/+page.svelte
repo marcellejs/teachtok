@@ -12,6 +12,7 @@
     comments,
     store,
     label,
+    allTrainingData,
   } from '$lib/marcelle';
   import { base } from '$app/paths';
   import { logEvent } from '$lib/marcelle/log';
@@ -26,7 +27,13 @@
 
   $: labelValue = label.$value;
 
-  const categories = [
+  const categories = [];
+  async function getCategory() {
+    const tmp = await allTrainingData.distinct('y');
+    categories.push(...tmp);
+  }
+  getCategory();
+  /*const categories = [
     'African Dance',
     'Ballet',
     'Contemporary',
@@ -37,7 +44,7 @@
     'Tango',
     'Tap Dancing',
     'Voguing',
-  ];
+  ];*/
 
   let showShareData = false;
   let showShareInsight = false;
@@ -101,9 +108,6 @@
       </div>
       <!--scaling the chart to 0.5 and putting the buttons in-between camera & chart is the most fastforward solution-->
       <div class="chart" use:marcelle={confidencesMobile} />
-
-      <!--creating a custome component to display the predictions differently might be more nice looking (not even sure)-->
-      <!--<div class="my-chart" use:marcelle={chart} />-->
     </div>
     {#if showShareData}
       <ModalMobile
@@ -112,27 +116,27 @@
         }}
         on:load={() => {
           src.$images.set(inputMobile.$images.get());
+          src.$thumbnails.set(inputMobile.$thumbnails.get());
         }}
       >
         <div style="padding: 1rem;">
           <div class="modal-header">Which label for this image ?</div>
           <div style="padding: 1rem">
             <div class="modal-image mb-4" use:marcelle={displayMobile} />
-            <input
+            <!--<input
               type="text"
               placeholder="Choose a label"
               class="input input-bordered w-full mb-4"
               bind:value={$labelValue}
-            />
-            <!-- <Autocomplete
-              inputValue={$currentLabel}
+            />-->
+            <Autocomplete
+              options={categories}
+              inputValue={$labelValue}
               on:value={({ detail }) => {
                 label.$value.set(detail);
               }}
-              invalid={!categories.includes($currentLabel)}
-            /> -->
+            />
             <div class="modal-row">
-              <!--disabled={!categories.includes($currentLabel)}-->
               <button
                 class="btn btn-secondary"
                 on:click={() => captureMobile.$click.set(undefined)}

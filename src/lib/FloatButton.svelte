@@ -31,6 +31,7 @@
     text-decoration: none; /* Add this to remove underline from the link */
   }
   .icon {
+    filter: invert(100%);
     width: 50%;
     height: 50%;
   }
