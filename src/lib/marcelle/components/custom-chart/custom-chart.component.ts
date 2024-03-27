@@ -10,27 +10,27 @@ export class CustomChart extends Component {
     super();
     this.title = 'Predictions';
     this.sorted = [];
-    this.primary = "test";
+    this.primary = 'test';
   }
 
   // @ts-ignore
-  updatePred(pred){
+  updatePred(pred) {
     //here we also wanna sort them roughly
-    console.log("we got the predictions: ", JSON.stringify(pred))
-    this.primary = pred["label"];
+    // console.log("we got the predictions: ", JSON.stringify(pred))
+    this.primary = pred['label'];
     // Convert the "confidences" object into an array of arrays
-    this.sorted = Object.entries(pred["confidences"])
+    this.sorted = Object.entries(pred['confidences'])
       // @ts-ignore
       .map(([key, value]) => [key, parseFloat(value.toFixed(5))]); // Round confidence to 5 decimal places
 
     // Sort the array based on confidence values
     this.sorted.sort((a, b) => b[1] - a[1]);
 
-    console.log(this.sorted);
+    // console.log(this.sorted);
 
-    if(this.$$.app){
-			this.$$.app.$set({ primary:this.primary, sorted:this.sorted });
-		}
+    if (this.$$.app) {
+      this.$$.app.$set({ primary: this.primary, sorted: this.sorted });
+    }
   }
 
   mount(target?: HTMLElement): void {

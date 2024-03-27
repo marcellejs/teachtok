@@ -35,7 +35,7 @@ export const inputDisplay = imageDisplay($images);
 
 const $imagesMobile = new Stream(inputMobile.$images, true);
 
-export const src = imageUpload({ width: 224, height: 224});
+export const src = imageUpload({ width: 224, height: 224 });
 // @ts-ignore
 export const displayMobile = imageDisplay(src.$images);
 
@@ -47,6 +47,9 @@ capture.title = 'Capture image to my dataset';
 
 export const captureMobile = button('Record Mobile Instance');
 captureMobile.title = 'this is not showed anyway';
+captureMobile.$click.subscribe((x) => {
+  console.log('CAPTURE MOBILE', x);
+});
 
 const $myPredictions = $images
   .merge(metaCVModel.$training.filter(({ status }) => status === 'success').sample($images))
@@ -96,7 +99,9 @@ capture.$click
   });
 
 captureMobile.$click
+  .tap(console.log)
   .sample(src.$images.zip((t, i) => [i, t], src.$thumbnails))
+  .tap(console.log)
   .map(async ([img, thumbnail]) => ({
     x: await featureExtractor.process(img),
     y: label.$value.value,

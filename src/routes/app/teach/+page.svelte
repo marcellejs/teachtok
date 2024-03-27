@@ -10,6 +10,7 @@
     comments,
     store,
     label,
+    allTrainingData,
   } from '$lib/marcelle';
   import { logEvent } from '$lib/marcelle/log';
   import { marcelle } from '$lib/utils';
@@ -23,18 +24,18 @@
   $: labelValue = label.$value;
 
   $: currentLabel = label.$value;
-  const categories = [
-    'African Dance',
-    'Ballet',
-    'Contemporary',
-    'Hip Hop',
-    'Jazz',
-    'Persian Dance',
-    'Salsa',
-    'Tango',
-    'Tap Dancing',
-    'Voguing',
-  ];
+  // const categories = [
+  //   'African Dance',
+  //   'Ballet',
+  //   'Contemporary',
+  //   'Hip Hop',
+  //   'Jazz',
+  //   'Persian Dance',
+  //   'Salsa',
+  //   'Tango',
+  //   'Tap Dancing',
+  //   'Voguing',
+  // ];
 
   let showShareData = false;
   let showShareInsight = false;
@@ -64,8 +65,13 @@
     });
   }
 
+  let categories = [];
   onMount(() => {
     logEvent('navigate', 'teach');
+    allTrainingData.distinct('y').then((res) => {
+      categories = res;
+      console.log('distinct y', res);
+    });
   });
 </script>
 
@@ -112,20 +118,20 @@
       <div style="padding: 1rem;">
         <div class="modal-header">Use this image for teaching?</div>
         <div style="padding: 1rem">
-          <input
+          <!-- <input
             type="text"
             placeholder="Choose a label"
             class="input input-bordered w-full mb-4"
             bind:value={$labelValue}
-          />
-          <!-- <Autocomplete
+          /> -->
+          <Autocomplete
             options={categories}
             inputValue={$currentLabel}
             on:value={({ detail }) => {
               label.$value.set(detail);
             }}
             invalid={!categories.includes($currentLabel)}
-          /> -->
+          />
           <div class="modal-row">
             <button
               class="btn btn-secondary"
