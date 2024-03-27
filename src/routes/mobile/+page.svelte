@@ -12,13 +12,11 @@
     comments,
     store,
     label,
-    chart,
   } from '$lib/marcelle';
   import { base } from '$app/paths';
   import { logEvent } from '$lib/marcelle/log';
   import { marcelle } from '$lib/utils';
   import ModalMobile from '$lib/ModalMobile.svelte';
-  import Modal from '$lib/Modal.svelte';
   import html2canvas from 'html2canvas';
   import { onMount } from 'svelte';
   import FloatButton from '$lib/FloatButton.svelte';
@@ -26,7 +24,8 @@
   let screenshotElt;
   let screenshotImg;
 
-  $: currentLabel = label.$value;
+  $: labelValue = label.$value;
+
   const categories = [
     'African Dance',
     'Ballet',
@@ -119,13 +118,19 @@
           <div class="modal-header">Which label for this image ?</div>
           <div style="padding: 1rem">
             <div class="modal-image mb-4" use:marcelle={displayMobile} />
-            <Autocomplete
+            <input
+              type="text"
+              placeholder="Choose a label"
+              class="input input-bordered w-full mb-4"
+              bind:value={$labelValue}
+            />
+            <!-- <Autocomplete
               inputValue={$currentLabel}
               on:value={({ detail }) => {
                 label.$value.set(detail);
               }}
               invalid={!categories.includes($currentLabel)}
-            />
+            /> -->
             <div class="modal-row">
               <!--disabled={!categories.includes($currentLabel)}-->
               <button

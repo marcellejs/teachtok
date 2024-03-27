@@ -20,6 +20,8 @@
   let screenshotElt;
   let screenshotImg;
 
+  $: labelValue = label.$value;
+
   $: currentLabel = label.$value;
   const categories = [
     'African Dance',
@@ -110,18 +112,24 @@
       <div style="padding: 1rem;">
         <div class="modal-header">Use this image for teaching?</div>
         <div style="padding: 1rem">
-          <Autocomplete
+          <input
+            type="text"
+            placeholder="Choose a label"
+            class="input input-bordered w-full mb-4"
+            bind:value={$labelValue}
+          />
+          <!-- <Autocomplete
             options={categories}
             inputValue={$currentLabel}
             on:value={({ detail }) => {
               label.$value.set(detail);
             }}
             invalid={!categories.includes($currentLabel)}
-          />
+          /> -->
           <div class="modal-row">
             <button
               class="btn btn-secondary"
-              disabled={!categories.includes($currentLabel)}
+              disabled={!$currentLabel}
               on:click={() => capture.$click.set(undefined)}
             >
               Record image

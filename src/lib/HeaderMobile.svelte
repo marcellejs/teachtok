@@ -1,19 +1,26 @@
 <script lang="ts">
-  // @ts-nocheck
   import { goto } from '$app/navigation';
-  import { store, metaCVModel, $accuracy as accuracy, trainingUpToDate } from '$lib/marcelle';
+  import {
+    store,
+    metaCVModel,
+    $accuracy as accuracy,
+    trainingUpToDate,
+    metaCVBatch,
+  } from '$lib/marcelle';
   import { base } from '$app/paths';
 
   export let user: { avatar: string; name: string };
+  let cvStatus = metaCVBatch.$status.map((x) => x.status);
 
-  let trainingStatus = metaCVModel.$training
+  let trainingStatus = metaCVModel.$training;
+  let isLoaded = metaCVModel.$training
     .map(({ status }) => {
-      if (status === 'epoch') {
-        return 'training';
+      if (status === 'loaded') {
+        return true;
       }
-      return status;
+      return false;
     })
-    .startWith('idle')
+    .startWith(false)
     .hold();
 
   let progress = metaCVModel.$training
@@ -55,14 +62,14 @@
   <div class="navbar bg-base-100 max-h-16">
     <div class="flex-1"></div>
     <div class="navbar-end flex-none gap-8">
-      <button
+      <!-- <button
         class="btn btn-sm btn-circle btn-outline mr-2"
         class:btn-success={$trainingUpToDate}
         class:btn-warning={!$trainingUpToDate}
         class:loading={$trainingStatus === 'training'}
         class:disabled={$trainingStatus === 'training'}
       >
-        <!--on:click={crossValidation}-->
+        <!--on:click={crossValidation}--
         {#if $trainingStatus !== 'training'}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,23 +84,23 @@
             />
           </svg>
         {/if}
-      </button>
+      </button> -->
 
       <div
         class="tooltip tooltip-bottom"
-        class:tooltip-success={$trainingUpToDate}
-        class:tooltip-warning={!$trainingUpToDate}
+        class:tooltip-success={$isLoaded}
+        class:tooltip-warning={!$isLoaded}
         data-tip={$trainingUpToDate
           ? 'Everything is up to date!'
           : 'New data has been added, the performance score is outdated'}
       >
-        <div
-          class="mr-4 text-left"
-          class:text-success={$trainingUpToDate}
-          class:text-warning={!$trainingUpToDate}
-        >
-          <span class="hidden md:inline-block">Accuracy: </span>
-          <span class="inline-flex w-16 overflow-hidden">{$accuracy || '??'} %</span>
+        <div class="mr-4 text-left" class:text-success={$isLoaded} class:text-warning={!$isLoaded}>
+          {#if $isLoaded}
+            <span class="hidden md:inline-block">Model Loaded, Accuracy: </span>
+            <span class="inline-flex w-16 overflow-hidden">{$accuracy || '??'} %</span>
+          {:else}
+            <span class="hidden md:inline-block">Loading...</span>
+          {/if}
         </div>
       </div>
 

@@ -144,7 +144,7 @@
           </div>
         </label>
         <ul class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a href="{base}/settings">Settings</a></li>
+          <li><a href={base}>Home</a></li>
           <li><button on:click={signout}>Logout</button></li>
         </ul>
       </div>
