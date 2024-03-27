@@ -37,7 +37,11 @@
     {#if showOptions}
       <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-50">
         {#each selection as option}
-          <li><button on:click={() => selectOption(option)}>{option}</button></li>
+          <li>
+            <button on:click={() => selectOption(option)} on:touchend={() => selectOption(option)}
+              >{option}</button
+            >
+          </li>
         {/each}
       </ul>
     {/if}

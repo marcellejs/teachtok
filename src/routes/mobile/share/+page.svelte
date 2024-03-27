@@ -71,7 +71,7 @@
 </svelte:head>
 
 <section class="marcelle">
-  <div class="conf-row items-stretch" bind:this={screenshotElt}>
+  <div class="conf-row items-stretch mb-24" bind:this={screenshotElt}>
     <div class="card" use:marcelle={myTrainingDataBrowser} />
     <div class="w-80 flex flex-col justify-between items-center my-2 mx-1">
       <div class="stats grow">
@@ -81,7 +81,7 @@
           <!-- <div class="stat-desc text-error">XX% better than the collective model</div> -->
           <div class="stat-actions">
             <button class="btn btn-sm btn-outline btn-accent" on:click={crossValidation}>
-              Recompute Performance
+              Train & Recompute Performance
             </button>
           </div>
         </div>
