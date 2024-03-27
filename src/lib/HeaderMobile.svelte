@@ -86,23 +86,23 @@
         {/if}
       </button> -->
 
-      <div
+      <!-- <div
         class="tooltip tooltip-bottom"
         class:tooltip-success={$isLoaded}
         class:tooltip-warning={!$isLoaded}
         data-tip={$trainingUpToDate
           ? 'Everything is up to date!'
           : 'New data has been added, the performance score is outdated'}
-      >
-        <div class="mr-4 text-left" class:text-success={$isLoaded} class:text-warning={!$isLoaded}>
-          {#if $isLoaded}
-            <span class="hidden md:inline-block">Model Loaded, Accuracy: </span>
-            <span class="inline-flex w-16 overflow-hidden">{$accuracy || '??'} %</span>
-          {:else}
-            <span class="hidden md:inline-block">Loading...</span>
-          {/if}
-        </div>
+      > -->
+      <div class="mr-4 text-left" class:text-success={$isLoaded} class:text-warning={!$isLoaded}>
+        {#if $isLoaded}
+          <span class="hidden md:inline-block">Model Loaded, Accuracy: </span>
+          <span class="inline-flex w-16 overflow-hidden">{$accuracy || '??'} %</span>
+        {:else}
+          <span class="hidden md:inline-block">Loading...</span>
+        {/if}
       </div>
+      <!-- </div> -->
 
       <div class="dropdown dropdown-end">
         <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -121,7 +121,7 @@
           tabindex="0"
           class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
-          <li><a href="/settings">Settings</a></li>
+          <li><a href={base}>Home</a></li>
           <li><button on:click={signout}>Logout</button></li>
         </ul>
       </div>

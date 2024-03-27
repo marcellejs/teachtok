@@ -8,8 +8,13 @@
   import { goto } from '$app/navigation';
   import { store, metaCVModel, $accuracy as accuracy, trainingUpToDate } from '$lib/marcelle';
   import { base } from '$app/paths';
+  import { onMount } from 'svelte';
 
-  export let user: { avatar: string; name: string };
+  let user: { avatar: string; name: string } = {};
+
+  onMount(() => {
+    user = store.user;
+  });
 
   let trainingStatus = metaCVModel.$training
     .map(({ status }) => {
