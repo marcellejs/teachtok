@@ -1,19 +1,27 @@
 <script lang="ts">
   // @ts-nocheck
   import { goto } from '$app/navigation';
-  import { store, metaCVModel, $accuracy as accuracy, trainingUpToDate } from '$lib/marcelle';
+  import {
+    store,
+    metaCVModel,
+    $accuracy as accuracy,
+    trainingUpToDate,
+    metaCVBatch,
+  } from '$lib/marcelle';
   import { base } from '$app/paths';
 
   export let user: { avatar: string; name: string };
+  let cvStatus = metaCVBatch.$status.map((x) => x.status);
 
-  let trainingStatus = metaCVModel.$training
+  let trainingStatus = metaCVModel.$training;
+  let isLoaded = metaCVModel.$training
     .map(({ status }) => {
-      if (status === 'epoch') {
-        return 'training';
+      if (status === 'loaded') {
+        return true;
       }
-      return status;
+      return false;
     })
-    .startWith('idle')
+    .startWith(false)
     .hold();
 
   let progress = metaCVModel.$training
@@ -55,14 +63,14 @@
   <div class="navbar bg-base-100 max-h-16">
     <div class="flex-1"></div>
     <div class="navbar-end flex-none gap-8">
-      <button
+      <!-- <button
         class="btn btn-sm btn-circle btn-outline mr-2"
         class:btn-success={$trainingUpToDate}
         class:btn-warning={!$trainingUpToDate}
         class:loading={$trainingStatus === 'training'}
         class:disabled={$trainingStatus === 'training'}
       >
-        <!--on:click={crossValidation}-->
+        <!--on:click={crossValidation}--
         {#if $trainingStatus !== 'training'}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,32 +85,34 @@
             />
           </svg>
         {/if}
-      </button>
+      </button> -->
 
-      <div
+      <!-- <div
         class="tooltip tooltip-bottom"
-        class:tooltip-success={$trainingUpToDate}
-        class:tooltip-warning={!$trainingUpToDate}
+        class:tooltip-success={$isLoaded}
+        class:tooltip-warning={!$isLoaded}
         data-tip={$trainingUpToDate
           ? 'Everything is up to date!'
           : 'New data has been added, the performance score is outdated'}
-      >
-        <div
-          class="mr-4 text-left"
-          class:text-success={$trainingUpToDate}
-          class:text-warning={!$trainingUpToDate}
-        >
-          <span class="hidden md:inline-block">Accuracy: </span>
+      > -->
+      <div class="mr-4 text-left" class:text-success={$isLoaded} class:text-warning={!$isLoaded}>
+        {#if $isLoaded}
+          <span class="hidden md:inline-block">Model Loaded, Accuracy: </span>
           <span class="inline-flex w-16 overflow-hidden">{$accuracy || '??'} %</span>
-        </div>
+        {:else}
+          <span class="hidden md:inline-block">Loading...</span>
+        {/if}
       </div>
+      <!-- </div> -->
 
       <div class="dropdown dropdown-end">
         <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
         <label tabindex="0" class="btn btn-ghost btn-circle avatar" for="">
           <div class="w-10 rounded-full">
             <img
-              src={user?.avatar || 'https://api.lorem.space/image/face?hash=33791'}
+              src={user?.avatar
+                ? `${base}/animals/${user?.avatar}`
+                : 'https://api.lorem.space/image/face?hash=33791'}
               alt="profile pic"
             />
           </div>
@@ -112,7 +122,7 @@
           tabindex="0"
           class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
-          <li><a href="/settings">Settings</a></li>
+          <li><a href={base}>Home</a></li>
           <li><button on:click={signout}>Logout</button></li>
         </ul>
       </div>

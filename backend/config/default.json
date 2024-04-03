@@ -4,7 +4,7 @@
   "database": "mongodb",
   "nedb": "../data",
   "uploads": "../uploads",
-  "mongodb": "mongodb://127.0.0.1:27017/teachtok",
+  "mongodb": "mongodb://127.0.0.1:27017/teachtok_ihm24",
   "gridfs": true,
   "whitelist": {
     "services": "*",
@@ -23,7 +23,7 @@
     "enabled": true,
     "entity": "user",
     "service": "users",
-    "allowSignup": false,
+    "allowSignup": true,
     "secret": "ZjXdk3pXZLVpvcEMGGuh6LYdi9o=",
     "authStrategies": [
       "jwt",

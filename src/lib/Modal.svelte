@@ -8,7 +8,7 @@
 </script>
 
 <div
-  class="absolute min-h-screen top-0 inset-x-0 p-4 pb-4 z-20 sm:flex sm:items-center sm:justify-center"
+  class="absolute h-full top-14 inset-x-0 px-8 pt-32 pb-4 z-20 sm:flex sm:items-center sm:justify-center"
 >
   <div class="absolute min-h-screen inset-0 transition-opacity">
     <div

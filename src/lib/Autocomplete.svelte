@@ -1,10 +1,10 @@
 <script lang="ts">
+  //@ts-nocheck
   import fuzzysort from 'fuzzysort';
   import { createEventDispatcher } from 'svelte';
 
   export let options = [];
   export let inputValue = '';
-  export let invalid = false;
   let selection = options;
   let showOptions = false;
 
@@ -27,7 +27,6 @@
   <div class="dropdown w-full">
     <input
       class="input input-bordered w-full"
-      class:input-error={invalid}
       type="text"
       placeholder="Search Labels"
       bind:value={inputValue}
@@ -38,7 +37,11 @@
     {#if showOptions}
       <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-50">
         {#each selection as option}
-          <li><button on:click={() => selectOption(option)}>{option}</button></li>
+          <li>
+            <button on:click={() => selectOption(option)} on:touchend={() => selectOption(option)}
+              >{option}</button
+            >
+          </li>
         {/each}
       </ul>
     {/if}

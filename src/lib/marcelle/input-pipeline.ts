@@ -13,6 +13,9 @@ import { crossValidation, metaCVModel } from './cross-validation';
 import { myTrainingData } from './datasets';
 import { logEvent } from './log';
 import { store, type User } from './store';
+import { customChart } from './components';
+
+export const chart = customChart(); //must improve this one !
 
 export const inputMobile = webcam();
 inputMobile.$images.subscribe(() => {
@@ -27,11 +30,13 @@ input.$images.subscribe(() => {
 const featureExtractor = mobileNet();
 
 const $images = new Stream(input.$images, true);
+// @ts-ignore
 export const inputDisplay = imageDisplay($images);
 
 const $imagesMobile = new Stream(inputMobile.$images, true);
 
-export const src = imageUpload({ width: 224, height: 224})
+export const src = imageUpload({ width: 224, height: 224 });
+// @ts-ignore
 export const displayMobile = imageDisplay(src.$images);
 
 export const label = textInput();
@@ -42,6 +47,9 @@ capture.title = 'Capture image to my dataset';
 
 export const captureMobile = button('Record Mobile Instance');
 captureMobile.title = 'this is not showed anyway';
+captureMobile.$click.subscribe((x) => {
+  console.log('CAPTURE MOBILE', x);
+});
 
 const $myPredictions = $images
   .merge(metaCVModel.$training.filter(({ status }) => status === 'success').sample($images))
@@ -59,13 +67,15 @@ const $predictionsMobile = $imagesMobile
   .awaitPromises();
 $predictionsMobile.subscribe((pred) => {
   logEvent('prediction', pred);
+  //console.log("prediction is: " + JSON.stringify(pred));
+  chart.updatePred(pred);
 });
 
 export const myConfidences = confidencePlot($myPredictions);
 myConfidences.title = 'Predictions (My Model)';
 
 export const confidencesMobile = confidencePlot($predictionsMobile);
-confidencesMobile.title = 'Predictions (My Model)';
+confidencesMobile.title = "Model's Predictions";
 
 capture.$click
   .sample($images.zip((t, i) => [i, t], input.$thumbnails))
@@ -88,8 +98,10 @@ capture.$click
     });
   });
 
-  captureMobile.$click
+captureMobile.$click
+  .tap(console.log)
   .sample(src.$images.zip((t, i) => [i, t], src.$thumbnails))
+  .tap(console.log)
   .map(async ([img, thumbnail]) => ({
     x: await featureExtractor.process(img),
     y: label.$value.value,
