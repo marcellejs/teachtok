@@ -1,4 +1,5 @@
 <script>
+  // @ts-nocheck
   import {
     commentsArea,
     exportBtnTrain,
@@ -80,16 +81,16 @@
 </svelte:head>
 
 <section class="marcelle">
-  <div class="conf-row items-stretch" bind:this={screenshotElt}>
+  <div class="conf-row items-stretch w-full" bind:this={screenshotElt}>
     <div class="card" use:marcelle={myTrainingDataBrowser} />
-    <div class="w-80 flex flex-col justify-between items-center my-2 mx-1">
-      <div class="stats grow">
-        <div class="stat">
-          <div class="stat-title">Overall Accuracy</div>
-          <div class="stat-value text-success w-full">{$accuracy || '??'}%</div>
+    <div class="w-full flex flex-col justify-between items-center my-2 mx-1">
+      <div class="stats w-full justify-center">
+        <div class="stat" align="center">
+          <div class="stat-title font-bold text-xl">Overall Accuracy</div>
+          <div class="stat-value py-4 text-success w-full text-5xl">{$accuracy || '??'}%</div>
           <!-- <div class="stat-desc text-error">XX% better than the collective model</div> -->
           <div class="stat-actions">
-            <button class="btn btn-sm btn-outline btn-accent" on:click={crossValidation}>
+            <button class="btn btn-sm btn-outline btn-accent text-xl" on:click={crossValidation}>
               Recompute Performance
             </button>
           </div>
@@ -103,7 +104,7 @@
         data-tip="New data has been added, the performance score is outdated"
       >
         <button
-          class="btn"
+          class="btn my-btn"
           class:btn-secondary={$trainingUpToDate}
           class:btn-disabled={!$trainingUpToDate}
           style="margin-right: 7%;"
@@ -144,7 +145,8 @@
 <style>
   .conf-row {
     display: flex;
-    justify-content: right;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
   }
 
@@ -166,5 +168,10 @@
 
   .notitle :global(.card-title) {
     display: none;
+  }
+
+  .my-btn {
+    margin-top: 8px;
+    scale: 1.25;
   }
 </style>

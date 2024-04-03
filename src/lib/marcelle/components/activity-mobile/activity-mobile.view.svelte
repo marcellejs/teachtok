@@ -79,7 +79,7 @@
                     />
                   </div>
                 </div>
-                <span class="author mx-1 font-bold">{message.author}</span>
+                <span class="author mx-2 font-bold">{message.author}</span>
                 {#if message.action.includes('dataset')}
                   <p>
                     added {message.instances.length} images to

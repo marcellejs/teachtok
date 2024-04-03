@@ -5,6 +5,7 @@
 </script>
 
 <script lang="ts">
+  // @ts-nocheck
   import { goto } from '$app/navigation';
   import { store, metaCVModel, $accuracy as accuracy, trainingUpToDate } from '$lib/marcelle';
   import { base } from '$app/paths';
@@ -62,7 +63,7 @@
 </script>
 
 <header>
-  <div class="navbar bg-base-100 max-h-16">
+  <div class="navbar bg-base-100 max-h-16 pr-8">
     <div class="flex-1">
       <span
         class="tooltip tooltip-bottom before:text-xs before:content-[attr(data-tip)]"
@@ -138,6 +139,7 @@
         </div>
       </div>
       <div class="dropdown dropdown-end">
+        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
         <label tabindex="0" class="btn btn-ghost btn-circle avatar" for="">
           <div class="w-10 rounded-full">
             <img
@@ -148,7 +150,9 @@
             />
           </div>
         </label>
-        <ul class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+        <ul
+          class="menu menu-compact gap-4 dropdown-content mt-3 shadow bg-base-100 rounded-box w-fit menu-font px-2 py-4"
+        >
           <li><a href={base}>Home</a></li>
           <li><button on:click={signout}>Logout</button></li>
         </ul>
@@ -170,6 +174,9 @@
     header {
       /* position: relative; */
       left: 0;
+    }
+    .menu-font {
+      font-size: 1.5rem;
     }
   }
 </style>

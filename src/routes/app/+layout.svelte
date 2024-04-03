@@ -1,4 +1,5 @@
 <script>
+  // @ts-nocheck
   import Header from '$lib/Header.svelte';
   import Sidebar from '$lib/Sidebar.svelte';
 
@@ -14,7 +15,7 @@
       <slot />
     </div>
   </div>
-  <div class="drawer-side" style="scroll-behavior: smooth; scroll-padding-top: 5rem;">
+  <div id="sidebar" class="drawer-side" style="scroll-behavior: smooth; scroll-padding-top: 5rem;">
     <label for="drawer" class="drawer-overlay" />
     <Sidebar />
   </div>

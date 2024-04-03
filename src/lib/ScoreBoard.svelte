@@ -6,7 +6,7 @@
   $: user = store.user as User;
 </script>
 
-<div class="card w-96 bg-base-100 shadow-xl">
+<div class="card grow bg-base-100 shadow-xl">
   <figure>
     <div class="w-24">
       <img src="{base}/crown.png" class="w-24 h-24" alt="" />

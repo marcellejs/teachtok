@@ -1,4 +1,5 @@
 <script lang="ts">
+  // @ts-nocheck
   import { base } from '$app/paths';
   import { numClassesChart, accuracyChart, store } from '$lib/marcelle';
   import { logEvent } from '$lib/marcelle/log';
@@ -27,20 +28,13 @@
 </svelte:head>
 
 <section>
-  <div class="marcelle flex gap-2">
-    <div class="flex flex-col items-stretch">
-      <WelcomeCard />
-      <div class="card w-96 bg-base-100 shadow-xl flex items-center justify-center">
-        <h3 class="font-bold mb-2">Connect your mobile:</h3>
-        <div bind:this={qrelt}></div>
-      </div>
-      <ScoreBoard />
-    </div>
-
+  <div class="marcelle flex flex-col gap-2 items-stretch">
+    <WelcomeCard />
     <div class="grow">
       <div class="card" use:marcelle={accuracyChart} />
       <div class="card" use:marcelle={numClassesChart} />
     </div>
+    <ScoreBoard />
   </div>
 </section>
 
