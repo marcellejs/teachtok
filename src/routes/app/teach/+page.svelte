@@ -25,18 +25,18 @@
   $: labelValue = label.$value;
 
   $: currentLabel = label.$value;
-  // const categories = [
-  //   'African Dance',
-  //   'Ballet',
-  //   'Contemporary',
-  //   'Hip Hop',
-  //   'Jazz',
-  //   'Persian Dance',
-  //   'Salsa',
-  //   'Tango',
-  //   'Tap Dancing',
-  //   'Voguing',
-  // ];
+  const base_categories = [
+    'African Dance',
+    'Ballet',
+    'Contemporary',
+    'Hip Hop',
+    'Jazz',
+    'Persian Dance',
+    'Salsa',
+    'Tango',
+    'Tap Dancing',
+    'Voguing',
+  ];
 
   let showShareData = false;
   let showShareInsight = false;
@@ -66,14 +66,30 @@
     });
   }
 
-  let categories = [];
+  let added_categories = [];
   onMount(() => {
     logEvent('navigate', 'teach');
     allTrainingData.distinct('y').then((res) => {
-      categories = res;
+      added_categories = res;
       console.log('distinct y', res);
     });
   });
+
+  function OneOccConcat(a1, a2) {
+    let unique = new Set(a1);
+
+    for (let i = 0; i < a2.length; i++) {
+      if (!unique.has(a2[i])) {
+        unique.add(a2[i]);
+      }
+    }
+
+    let res = Array.from(unique);
+
+    return res;
+  }
+
+  const categories = OneOccConcat(base_categories, added_categories);
 </script>
 
 <svelte:head>
