@@ -9,7 +9,7 @@
   $: user = store.user as User;
 </script>
 
-<div class="card w-fill bg-base-100 shadow-xl">
+<div class="card w-fill md:w-96 bg-base-100 shadow-xl">
   <figure>
     <div class="w-24">
       <img

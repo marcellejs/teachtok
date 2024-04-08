@@ -13,8 +13,25 @@
   import { base } from '$app/paths';
 </script>
 
-<nav class="w-fit bg-white pt-16 h-full">
-  <div class="side-nav-top">
+<nav class="w-fit bg-white h-full">
+  <div
+    class="hidden md:block z-20 bg-opacity-90 backdrop-blur sticky top-0 items-center gap-2 p-4 self-center"
+  >
+    <a
+      href="{base}/app"
+      aria-current="page"
+      aria-label="Homepage"
+      class="flex-0 btn btn-ghost px-2"
+    >
+      <span
+        class="font-title text-primary inline-flex text-center text-lg transition-all duration-200 md:text-3xl"
+      >
+        <span class="lowercase">Teach</span>
+        <span class="text-base-content uppercase">TOK</span>
+      </span>
+    </a>
+  </div>
+  <div class="side-nav-top mt-16 md:mt-0">
     <ul class="menu flex flex-col p-0 px-4">
       <li class="menu-title"><span class="text-primary">Main Features</span></li>
       <li>

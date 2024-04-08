@@ -28,13 +28,16 @@
 </svelte:head>
 
 <section>
-  <div class="marcelle flex flex-col gap-2 items-stretch">
-    <WelcomeCard />
-    <div class="grow">
+  <div class="marcelle flex flex-col md:flex-row gap-2">
+    <div class="flex flex-col items-stretch">
+      <WelcomeCard />
+      <ScoreBoard />
+    </div>
+
+    <div class="flex flex-col grow">
       <div class="card" use:marcelle={accuracyChart} />
       <div class="card" use:marcelle={numClassesChart} />
     </div>
-    <ScoreBoard />
   </div>
 </section>
 

@@ -81,13 +81,13 @@
 </svelte:head>
 
 <section class="marcelle">
-  <div class="conf-row items-stretch w-full" bind:this={screenshotElt}>
+  <div class="conf-rsp conf-row items-stretch rsp" bind:this={screenshotElt}>
     <div class="card" use:marcelle={myTrainingDataBrowser} />
-    <div class="w-full flex flex-col justify-between items-center my-2 mx-1">
-      <div class="stats w-full justify-center">
+    <div class="rsp flex flex-col justify-between items-center my-2 mx-1">
+      <div class="stats rsp justify-center">
         <div class="stat" align="center">
           <div class="stat-title font-bold text-xl">Overall Accuracy</div>
-          <div class="stat-value py-4 text-success w-full text-5xl">{$accuracy || '??'}%</div>
+          <div class="stat-value py-4 text-success rsp text-5xl">{$accuracy || '??'}%</div>
           <!-- <div class="stat-desc text-error">XX% better than the collective model</div> -->
           <div class="stat-actions">
             <button class="btn btn-sm btn-outline btn-accent text-xl" on:click={crossValidation}>
@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div
+      <!--<div
         class="tooltip tooltip-bottom m-4"
         class:tooltip={!$trainingUpToDate}
         class:tooltip-success={$trainingUpToDate}
@@ -112,7 +112,7 @@
         >
           Share
         </button>
-      </div>
+      </div>-->
     </div>
   </div>
 
@@ -143,9 +143,19 @@
 </section>
 
 <style>
+  @media (max-width: 768px) {
+    .conf-rsp {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+    .rsp {
+      width: 100%;
+    }
+  }
   .conf-row {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     width: 100%;
   }

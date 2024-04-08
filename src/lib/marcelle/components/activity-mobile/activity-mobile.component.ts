@@ -4,7 +4,7 @@ import { Component } from '@marcellejs/core';
 import View from './activity-mobile.view.svelte';
 
 export class ActivityMobile extends Component {
-  title = 'activity (mobile)';
+  title = 'activity chat';
 
   constructor(
     public dataset: Dataset<undefined, undefined>,

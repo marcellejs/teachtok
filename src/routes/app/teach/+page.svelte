@@ -82,27 +82,35 @@
 
 <section class="marcelle vertical">
   <div>
-    <div class="flex-col md:flex-row" bind:this={screenshotElt}>
+    <div class="conf-row-rsp flex-col md:flex-row" bind:this={screenshotElt}>
       <div class="conf-col">
         <div class="card">
           <div class="marcelle-input notitle" use:marcelle={input} />
           <div class="flex justify-center items-center pt-2">
             <div class="notitle" use:marcelle={inputDisplay} />
           </div>
+          <button
+            class="hidden md:block my-8 mx-16 btn btn-primary"
+            on:click={() => {
+              showShareData = true;
+            }}
+          >
+            Teach
+          </button>
         </div>
       </div>
       <div class="card" use:marcelle={myConfidences} />
     </div>
     <div class="conf-row">
       <button
-        class="btn btn-primary"
+        class="block md:hidden my-8 mx-16 btn btn-primary"
         on:click={() => {
           showShareData = true;
         }}
       >
         Teach
       </button>
-      <button class="btn btn-primary" on:click={openInsightModal}> Share insights </button>
+      <!--<button class="btn btn-primary" on:click={openInsightModal}> Share insights </button>-->
     </div>
   </div>
   {#if showShareData}
@@ -181,6 +189,12 @@
 </section>
 
 <style>
+  @media (min-width: 768px) {
+    .conf-row-rsp {
+      display: flex;
+      flex-direction: row;
+    }
+  }
   .btn {
     scale: 1.25;
   }

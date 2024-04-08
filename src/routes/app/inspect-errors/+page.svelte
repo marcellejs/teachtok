@@ -21,7 +21,7 @@
 </svelte:head>
 
 <section class="marcelle">
-  <div class="flex flex-col md:flex-row w-full md:items-stretch">
+  <div class="flex flex-col md:flex-row w-full md:items-stretch gap-4">
     <div class="tooltip tooltip-bottom tooltip-warning">
       <!--data-tip="select each square to see true/false predictions"-->
       <div class="card w-full" use:marcelle={cvConfusion} />
