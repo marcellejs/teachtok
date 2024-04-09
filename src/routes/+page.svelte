@@ -27,76 +27,71 @@
     </div>
     <section>
       <h2 class="text-2xl my-6">
-        Teach an image classifier together to recognize different demos you see tonight!
+        Train your Image Classifier as a team and inspect its performance both on your side or with
+        your team !
       </h2>
-      <!-- <p>
-        With TeachTOK, you can
-      </p> -->
     </section>
-    <!-- <section>
-      <h2 class="text-2xl my-6">What we expect from you</h2>
+    <section>
       <p>
-        In this study, you will teach a machine learning system to recognize dance styles, postures
-        and movements from images. This process will be collaborative, meaning that you will teach
-        this system together with a group of participants. You will be provided with credentials
-        (pseudonym, password) to log in a web application where you will be able to:
+        With this web application, you and your team can collectively teach an image classifier
+        using individual interfaces. Each team member will have access to different features
+        organized into pages:
       </p>
       <ul class="list-disc list-outside ml-8 mt-4">
-        <li>Communicate with others through a chat</li>
         <li>
-          Test the performance of the model by providing images and looking at what is predicted by
-          the model
+          <i>Homepage</i> - Here, you can view your model's performance as a team, including charts showing
+          the evolution of classes and accuracy rate.
         </li>
         <li>
-          Teach the model by providing new images and associated labels so that it gets better at
-          identifying particular dance styles or movements from images. You will be free to define
-          the categories that the system can recognize.
+          <i>Navbar</i> - This feature helps you track the model's training progress with a status bar,
+          and allows you to reload it or access settings.
+        </li>
+        <li>
+          <i>Teach</i> - This section enables you to input images, view the model's predictions, and
+          add them to your dataset, with the option to correct associated labels.
+        </li>
+        <li>
+          <i>Share</i> - Here, you can access the images you've personally added and assess the impact
+          of these additions on the model's training by recalculating its performance with the collective
+          dataset.
+        </li>
+        <li>
+          <i>Dataset</i> - This section provides access to all instances contained in the collective
+          dataset, organized by label.
         </li>
       </ul>
-      <div class="m-8">
-        <div class="alert shadow-lg">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="stroke-current flex-shrink-0 h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              /></svg
-            >
-            <span>
-              While you are free to choose the images to teach the model, we recommend using images
-              on which you have rights of use, whether your own or are under open licenses (e.g.
-              creative commons). Be mindful that uploading images of yourself might disclose your
-              identity. Yet, the collected images will be only accessed by the researchers and will
-              not be used in communications.
-            </span>
-          </div>
-        </div>
-      </div>
       <p>
-        The study will run for a period of two weeks, during which you will be free to access the
-        application whenever you want. You are asked to visit the application regularly, typically
-        once a day, so that you can build upon the changes made by others.
+        Additionally, you can access more advanced features to analyze the model's decisions on the
+        collective dataset:
       </p>
-    </section> -->
-  </section>
-  <section class="my-6 text-center">
-    {#if data?.user}
-      <a class="btn btn-secondary" href="{base}/app/">Go to the app</a>
-    {:else}
-      <a class="btn btn-secondary" href="{base}/auth/login">Log In</a>
-    {/if}
-    {#if data?.user?.role === 'admin'}
-      <a class="btn btn-primary" href="{base}/auth/signup">Create an Account</a>
-    {/if}
-    {#if data?.user}
-      <button class="btn btn-error btn-outline" on:click={signout}>Sign out</button>
-    {/if}
+      <ul class="list-disc list-outside ml-8 mt-4">
+        <li>
+          <i>Inspector</i> - Utilizing a confusion matrix, you can gain insight into how the collective
+          dataset is labeled by the model. By clicking on specific categories, you can further inspect
+          True and Predicted labels, along with confidence plots for selected images.
+        </li>
+        <li>
+          <i>Chat</i> - Here, you have the embedded possibility to exchange information about your personal
+          data and send custom messages to debate or discuss aspects of the model's decisions or the
+          progression of your teaching as a group.
+        </li>
+      </ul>
+    </section>
+    <section class="my-6 text-center">
+      {#if data?.user}
+        <a class="btn btn-secondary" href="{base}/app/">Go to the app</a>
+        <a class="btn btn-secondary" href="{base}/mobile/">Mobile Demo</a>
+      {:else}
+        <a class="btn btn-secondary" href="{base}/auth/login">Log In</a>
+        <a class="btn btn-primary" href="{base}/auth/signup">Create an Account</a>
+      {/if}
+      {#if data?.user?.role === 'admin'}
+        <a class="btn btn-primary" href="{base}/auth/signup">Create an Account</a>
+      {/if}
+      {#if data?.user}
+        <button class="btn btn-error btn-outline" on:click={signout}>Sign out</button>
+      {/if}
+    </section>
   </section>
 </div>
 
