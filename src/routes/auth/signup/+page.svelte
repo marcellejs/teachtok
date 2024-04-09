@@ -18,8 +18,6 @@
 </script>
 
 <script lang="ts">
-  import { goto } from '$app/navigation';
-
   import { base } from '$app/paths';
 
   // import html2canvas from 'html2canvas';
@@ -33,20 +31,18 @@
 
   let name: string;
   let avatar: string;
-  let email: string;
 
   function generateName() {
     name = petName();
     avatar = name.split(' ').slice(1).join('-').toLowerCase() + '.png';
-    email = name.split(' ').join('.') + '@marcelle.dev';
   }
 
   generateName();
 
-  async function signup() {
+  async function signup(e: { currentTarget: HTMLFormElement }) {
     err = null;
     res = null;
-    // const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
     // console.log('Here...');
     // const pic = await html2canvas(avatarElt).then((canvas: HTMLCanvasElement) =>
     //   canvas.toDataURL('image/jpeg'),
@@ -55,19 +51,14 @@
     store
       .service('users')
       .create({
-        email,
+        email: (formData.get('email') || '').toString(),
         name,
         avatar,
-        password: 'blablablabla',
-        team: 'A',
+        password: (formData.get('password') || '').toString(),
       })
       .then((user: unknown) => {
         res = user as User;
-        return res;
       })
-      .then(() => store.login(email, 'blablablabla'))
-      .then(() => store.connect())
-      .then(() => goto(`${base}/app/`))
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => {
         // eslint-disable-next-line no-console
@@ -120,9 +111,7 @@
         <span>User {res.email} was successfully created!</span>
       </div>
       <div class="flex-none">
-        <button class="btn btn-sm" on:click={() => goto(`${base}/auth/login?username=${name}`)}
-          >login</button
-        >
+        <button class="btn btn-sm" on:click={() => location.reload()}>ok (reload)</button>
       </div>
     </div>
   {/if}
@@ -133,6 +122,7 @@
       src="{base}/animals/{avatar}"
       alt={name}
     />
+    {base}
     <div class="form-control w-full">
       <label class="label" for="pseudo">
         <span class="label-text">Name</span>
@@ -166,8 +156,6 @@
         name="email"
         placeholder="Type here"
         class="input input-bordered w-full"
-        disabled
-        value={email}
       />
     </div>
     <div class="form-control w-full">
@@ -179,8 +167,6 @@
         name="password"
         placeholder="Type here"
         class="input input-bordered w-full"
-        value="blablablabla"
-        disabled
       />
     </div>
     <button class="btn bordered btn-primary" type="submit">Signup</button>
