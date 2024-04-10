@@ -1,5 +1,4 @@
-<script>
-  // @ts-nocheck
+<script lang="ts">
   import {
     commentsArea,
     exportBtnTrain,
@@ -28,9 +27,10 @@
 
   import html2canvas from 'html2canvas';
   import { onDestroy, onMount } from 'svelte';
+  import { demoMode } from '$lib/config';
 
-  let screenshotElt;
-  let screenshotImg;
+  let screenshotElt: HTMLDivElement;
+  let screenshotImg: string;
 
   function openDataModal() {
     html2canvas(screenshotElt, { scale: 2.5 }).then(function (canvas) {
@@ -96,23 +96,38 @@
           </div>
         </div>
       </div>
-      <!--<div
-        class="tooltip tooltip-bottom m-4"
-        class:tooltip={!$trainingUpToDate}
-        class:tooltip-success={$trainingUpToDate}
-        class:tooltip-warning={!$trainingUpToDate}
-        data-tip="New data has been added, the performance score is outdated"
-      >
-        <button
-          class="btn my-btn"
-          class:btn-secondary={$trainingUpToDate}
-          class:btn-disabled={!$trainingUpToDate}
-          style="margin-right: 7%;"
-          on:click={openDataModal}
+      {#if demoMode}
+        <div
+          class="tooltip tooltip-bottom tooltip-warning m-4"
+          data-tip="Data sharing has been disabled for the public demo"
         >
-          Share
-        </button>
-      </div>-->
+          <button
+            class="btn my-btn btn-disabled"
+            style="margin-right: 7%;"
+            on:click={openDataModal}
+          >
+            Share
+          </button>
+        </div>
+      {:else}
+        <div
+          class="tooltip tooltip-bottom m-4"
+          class:tooltip={!$trainingUpToDate}
+          class:tooltip-success={$trainingUpToDate}
+          class:tooltip-warning={!$trainingUpToDate}
+          data-tip="New data has been added, the performance score is outdated"
+        >
+          <button
+            class="btn my-btn"
+            class:btn-secondary={$trainingUpToDate}
+            class:btn-disabled={!$trainingUpToDate}
+            style="margin-right: 7%;"
+            on:click={openDataModal}
+          >
+            Share
+          </button>
+        </div>
+      {/if}
     </div>
   </div>
 

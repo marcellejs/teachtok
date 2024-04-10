@@ -5,6 +5,7 @@
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
   import { base } from '$app/paths';
+  import { demoMode } from '$lib/config';
 
   dayjs.extend(relativeTime);
 
@@ -62,7 +63,7 @@
             bind:value={msg}
           />
           <div class="px-2">
-            <Button on:click={sendMessage}>Send</Button>
+            <Button on:click={sendMessage} disabled={demoMode}>Send</Button>
           </div>
         </div>
       {/if}

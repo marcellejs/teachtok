@@ -60,14 +60,9 @@
   <form on:submit|preventDefault={login}>
     <div class="form-control w-full">
       <label class="label" for="email">
-        <span class="label-text">Enter your email</span>
+        <span class="label-text">Enter your username</span>
       </label>
-      <input
-        type="email"
-        name="email"
-        placeholder="Type here"
-        class="input input-bordered w-full"
-      />
+      <input type="text" name="email" placeholder="Type here" class="input input-bordered w-full" />
     </div>
     <div class="form-control w-full">
       <label class="label" for="password">

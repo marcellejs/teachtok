@@ -1,4 +1,3 @@
-//@ts-nocheck
 import type { Dataset, DataStore } from '@marcellejs/core';
 import { Component } from '@marcellejs/core';
 import View from './activity-mobile.view.svelte';

@@ -1,5 +1,4 @@
 <script lang="ts">
-  // @ts-nocheck
   import { page } from '$app/stores';
   import Fa from 'svelte-fa/src/fa.svelte';
   import { faHome } from '@fortawesome/free-solid-svg-icons';
@@ -57,7 +56,7 @@
           href="{base}/app/share"
         >
           <span class="flex-none"><Fa icon={faUpload} /></span>
-          <span class="flex-1">Share Images</span></a
+          <span class="flex-1">My Data</span></a
         >
       </li>
       <li>

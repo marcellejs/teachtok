@@ -80,7 +80,7 @@
     <section class="my-6 text-center">
       {#if data?.user}
         <a class="btn btn-secondary" href="{base}/app/">Go to the app</a>
-        <a class="btn btn-secondary" href="{base}/mobile/">Mobile Demo</a>
+        <!-- <a class="btn btn-secondary" href="{base}/mobile/">Mobile Demo</a> -->
       {:else}
         <a class="btn btn-secondary" href="{base}/auth/login">Log In</a>
         <a class="btn btn-primary" href="{base}/auth/signup">Create an Account</a>

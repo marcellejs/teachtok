@@ -18,6 +18,7 @@
   import Modal from '$lib/Modal.svelte';
   import html2canvas from 'html2canvas';
   import { onMount } from 'svelte';
+  import { demoMode } from '$lib/config';
 
   let screenshotElt;
   let screenshotImg;
@@ -126,7 +127,9 @@
       >
         Teach
       </button>
-      <!--<button class="btn btn-primary" on:click={openInsightModal}> Share insights </button>-->
+      {#if !demoMode}
+        <button class="btn btn-primary" on:click={openInsightModal}> Share insight</button>
+      {/if}
     </div>
   </div>
   {#if showShareData}
