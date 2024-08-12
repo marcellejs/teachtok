@@ -10,7 +10,17 @@ TeachTOK is a web application developed using [Marcelle](https://marcelle.dev/) 
 
 ## Installation
 
-## Usage
+### npm run dev
+
+Runs the app in the development mode.
+Open http://localhost:5173 to view it in the browser.
+
+The page will reload if you make edits.
+
+### npm run build
+
+Builds a static copy of your site to the `dist/` folder.
+Your app is ready to be deployed!
 
 ## Credits
 TeachTOK is developed for a research project led by [Behnoosh Mohammadzadeh](https://behnoosh-mohammadzadeh.com/) (PhD student at [LISN](https://www.lisn.upsaclay.fr/) and [ISIR](https://hci.isir.upmc.fr/)), [Jules Françoise](https://www.julesfrancoise.com/) (CNRS researcher at [LISN](https://www.lisn.upsaclay.fr/)), [Baptiste Caramiaux](https://baptistecaramiaux.com/) (CNRS researcher (tenured, HDR) at [ISIR](https://hci.isir.upmc.fr/)) and Michèle Gouiffès (Maître de Conférences (HDR) at [LISN](https://www.lisn.upsaclay.fr/)).
