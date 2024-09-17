@@ -12,19 +12,28 @@
     comments,
     store,
     label,
+    allTrainingData,
   } from '$lib/marcelle';
+  import { base } from '$app/paths';
   import { logEvent } from '$lib/marcelle/log';
   import { marcelle } from '$lib/utils';
   import ModalMobile from '$lib/ModalMobile.svelte';
-  import Modal from '$lib/Modal.svelte';
   import html2canvas from 'html2canvas';
   import { onMount } from 'svelte';
+  import FloatButton from '$lib/FloatButton.svelte';
 
   let screenshotElt;
   let screenshotImg;
 
-  $: currentLabel = label.$value;
-  const categories = [
+  $: labelValue = label.$value;
+
+  const categories = [];
+  async function getCategory() {
+    const tmp = await allTrainingData.distinct('y');
+    categories.push(...tmp);
+  }
+  getCategory();
+  /*const categories = [
     'African Dance',
     'Ballet',
     'Contemporary',
@@ -35,7 +44,7 @@
     'Tango',
     'Tap Dancing',
     'Voguing',
-  ];
+  ];*/
 
   let showShareData = false;
   let showShareInsight = false;
@@ -79,26 +88,26 @@
     <div class="conf-row flex-col md:flex-col" bind:this={screenshotElt}>
       <div class="conf-col">
         <div class="card max-w-full">
-          <!--half-->
-          <div class="m-4" use:marcelle={inputMobile} />
+          <div class="notitle m-2" use:marcelle={inputMobile} />
         </div>
       </div>
-      <div class="card" use:marcelle={confidencesMobile} />
-    </div>
-    <div class="mt-4 mb-4 flex flex-row">
-      <div class="conf-row">
-        <button
-          class="btn btn-primary"
-          on:click={() => {
-            showShareData = true;
-          }}
-        >
-          Add to Dataset
-        </button>
+      <div class="mb-4 flex flex-row">
+        <div class="conf-row">
+          <button
+            class="btn btn-primary"
+            on:click={() => {
+              showShareData = true;
+            }}
+          >
+            Add to Dataset
+          </button>
+        </div>
+        <!-- <div class="conf-row">
+          <button class="btn btn-primary" on:click={openInsightModal}> Share with Group </button>
+        </div> -->
       </div>
-      <div class="conf-row">
-        <button class="btn btn-primary" on:click={openInsightModal}> Share with Group </button>
-      </div>
+      <!--scaling the chart to 0.5 and putting the buttons in-between camera & chart is the most fastforward solution-->
+      <div class="chart" use:marcelle={confidencesMobile} />
     </div>
     {#if showShareData}
       <ModalMobile
@@ -107,24 +116,29 @@
         }}
         on:load={() => {
           src.$images.set(inputMobile.$images.get());
+          src.$thumbnails.set(inputMobile.$thumbnails.get());
         }}
       >
         <div style="padding: 1rem;">
           <div class="modal-header">Which label for this image ?</div>
           <div style="padding: 1rem">
-            <div class="modal-image" use:marcelle={displayMobile} />
+            <div class="modal-image mb-4" use:marcelle={displayMobile} />
+            <!--<input
+              type="text"
+              placeholder="Choose a label"
+              class="input input-bordered w-full mb-4"
+              bind:value={$labelValue}
+            />-->
             <Autocomplete
               options={categories}
-              inputValue={$currentLabel}
+              inputValue={$labelValue}
               on:value={({ detail }) => {
                 label.$value.set(detail);
               }}
-              invalid={!categories.includes($currentLabel)}
             />
             <div class="modal-row">
               <button
                 class="btn btn-secondary"
-                disabled={!categories.includes($currentLabel)}
                 on:click={() => captureMobile.$click.set(undefined)}
               >
                 Add Instance
@@ -143,7 +157,7 @@
       </ModalMobile>
     {/if}
     {#if showShareInsight}
-      <Modal
+      <ModalMobile
         on:quit={() => {
           showShareInsight = false;
         }}
@@ -176,8 +190,64 @@
             </div>
           </div>
         </div>
-      </Modal>
+      </ModalMobile>
     {/if}
+  </div>
+  <!-- <FloatButton href="{base}/mobile/chat/" img="{base}/mobile/chat.svg" /> -->
+  <div class="btm-nav">
+    <a href="{base}/mobile" class="active">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
+        />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"
+        />
+      </svg>
+    </a>
+    <a href="{base}/mobile/share">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
+        />
+      </svg>
+    </a>
+    <a href="{base}/mobile/chat">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+        />
+      </svg>
+    </a>
   </div>
 </section>
 
@@ -198,6 +268,11 @@
 
   .card {
     flex-grow: 1;
+  }
+  .chart {
+    /*margin-top: -20%;*/
+    margin-top: -80px;
+    scale: 0.6;
   }
 
   .conf-col {

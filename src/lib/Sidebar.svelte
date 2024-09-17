@@ -12,8 +12,10 @@
   import { base } from '$app/paths';
 </script>
 
-<nav class="w-80 bg-white">
-  <div class="z-20 bg-opacity-90 backdrop-blur sticky top-0 items-center gap-2 p-4 self-center">
+<nav class="w-fit bg-white h-full">
+  <div
+    class="hidden md:block z-20 bg-opacity-90 backdrop-blur sticky top-0 items-center gap-2 p-4 self-center"
+  >
     <a
       href="{base}/app"
       aria-current="page"
@@ -28,7 +30,7 @@
       </span>
     </a>
   </div>
-  <div class="side-nav-top">
+  <div class="side-nav-top mt-16 md:mt-0">
     <ul class="menu flex flex-col p-0 px-4">
       <li class="menu-title"><span class="text-primary">Main Features</span></li>
       <li>
@@ -54,7 +56,7 @@
           href="{base}/app/share"
         >
           <span class="flex-none"><Fa icon={faUpload} /></span>
-          <span class="flex-1">Share Images</span></a
+          <span class="flex-1">My Data</span></a
         >
       </li>
       <li>
@@ -124,5 +126,6 @@
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
+    overflow: hidden; /* disable mouse scroll (useless?) */
   }
 </style>

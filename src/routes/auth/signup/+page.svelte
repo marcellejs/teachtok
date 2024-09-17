@@ -1,26 +1,7 @@
-<script context="module">
-  // import { store, type User } from '$lib/marcelle/store';
-
-  /** @type {import('./[slug]').Load} */
-  export async function load() {
-    return {};
-    // // TODO: uncomment the next line for the final version, and update backend config
-    // try {
-    //   const user = await store.connect();
-    //   if (user.role !== 'Admin') {
-    //     return { status: 302, redirect: '/' };
-    //   }
-    //   return {};
-    // } catch (error) {
-    //   return { status: 302, redirect: '/' };
-    // }
-  }
-</script>
-
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { base } from '$app/paths';
 
-  // import html2canvas from 'html2canvas';
   import { store, type User } from '$lib/marcelle/store';
   import { petName } from '$lib/names';
 
@@ -31,6 +12,7 @@
 
   let name: string;
   let avatar: string;
+  let pwd = '';
 
   function generateName() {
     name = petName();
@@ -43,11 +25,6 @@
     err = null;
     res = null;
     const formData = new FormData(e.currentTarget);
-    // console.log('Here...');
-    // const pic = await html2canvas(avatarElt).then((canvas: HTMLCanvasElement) =>
-    //   canvas.toDataURL('image/jpeg'),
-    // );
-    // console.log('pic', pic);
     store
       .service('users')
       .create({
@@ -55,10 +32,15 @@
         name,
         avatar,
         password: (formData.get('password') || '').toString(),
+        team: (formData.get('team') || 'A').toString(),
       })
       .then((user: unknown) => {
         res = user as User;
+        return res;
       })
+      .then(({ email }) => store.login(email, pwd))
+      .then(() => store.connect())
+      .then(() => goto(`${base}/app/`))
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => {
         // eslint-disable-next-line no-console
@@ -122,7 +104,6 @@
       src="{base}/animals/{avatar}"
       alt={name}
     />
-    {base}
     <div class="form-control w-full">
       <label class="label" for="pseudo">
         <span class="label-text">Name</span>
@@ -149,14 +130,9 @@
     </div>
     <div class="form-control w-full">
       <label class="label" for="email">
-        <span class="label-text">Enter your email</span>
+        <span class="label-text">Choose a username</span>
       </label>
-      <input
-        type="email"
-        name="email"
-        placeholder="Type here"
-        class="input input-bordered w-full"
-      />
+      <input type="text" name="email" placeholder="Type here" class="input input-bordered w-full" />
     </div>
     <div class="form-control w-full">
       <label class="label" for="password">
@@ -167,8 +143,26 @@
         name="password"
         placeholder="Type here"
         class="input input-bordered w-full"
+        class:input-error={pwd && pwd.length < 8}
+        bind:value={pwd}
       />
+      <div class="label">
+        {#if pwd && pwd.length < 8}
+          <span class="label-text-alt text-error">Password must be at least 8 characters long</span>
+        {/if}
+      </div>
     </div>
+    <label class="form-control w-full max-w-xs" for="team">
+      <div class="label">
+        <span class="label-text">Pick a team</span>
+      </div>
+      <select class="select select-bordered" name="team">
+        <option disabled selected>Pick one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+    </label>
     <button class="btn bordered btn-primary" type="submit">Signup</button>
   </form>
 </section>

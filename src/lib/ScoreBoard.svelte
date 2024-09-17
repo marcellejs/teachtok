@@ -6,7 +6,7 @@
   $: user = store.user as User;
 </script>
 
-<div class="card w-96 bg-base-100 shadow-xl">
+<div class="card grow bg-base-100 shadow-xl">
   <figure>
     <div class="w-24">
       <img src="{base}/crown.png" class="w-24 h-24" alt="" />
@@ -23,7 +23,9 @@
                 <div class="avatar online">
                   <div class="w-16 rounded-full">
                     <img
-                      src={user?.avatar || 'https://api.lorem.space/image/face?hash=33791'}
+                      src={user?.avatar
+                        ? `${base}/animals/${user?.avatar}`
+                        : 'https://api.lorem.space/image/face?hash=33791'}
                       alt=""
                     />
                   </div>

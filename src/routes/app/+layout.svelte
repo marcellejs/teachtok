@@ -1,11 +1,10 @@
 <script>
-  console.log('Importing...');
+  // @ts-nocheck
   import Header from '$lib/Header.svelte';
   import Sidebar from '$lib/Sidebar.svelte';
 
   /** @type {import('./$types').LayoutData} */
   export let data;
-  console.log('Here...', data);
 </script>
 
 <div class="drawer lg:drawer-open">
@@ -16,7 +15,7 @@
       <slot />
     </div>
   </div>
-  <div class="drawer-side" style="scroll-behavior: smooth; scroll-padding-top: 5rem;">
+  <div id="sidebar" class="drawer-side" style="scroll-behavior: smooth; scroll-padding-top: 5rem;">
     <label for="drawer" class="drawer-overlay" />
     <Sidebar />
   </div>

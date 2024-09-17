@@ -1,4 +1,5 @@
 <script>
+  // @ts-nocheck
   import Autocomplete from '$lib/Autocomplete.svelte';
   import {
     input,
@@ -10,18 +11,22 @@
     comments,
     store,
     label,
+    allTrainingData,
   } from '$lib/marcelle';
   import { logEvent } from '$lib/marcelle/log';
   import { marcelle } from '$lib/utils';
   import Modal from '$lib/Modal.svelte';
   import html2canvas from 'html2canvas';
   import { onMount } from 'svelte';
+  import { demoMode } from '$lib/config';
 
   let screenshotElt;
   let screenshotImg;
 
+  $: labelValue = label.$value;
+
   $: currentLabel = label.$value;
-  const categories = [
+  const base_categories = [
     'African Dance',
     'Ballet',
     'Contemporary',
@@ -62,9 +67,30 @@
     });
   }
 
+  let added_categories = [];
   onMount(() => {
     logEvent('navigate', 'teach');
+    allTrainingData.distinct('y').then((res) => {
+      added_categories = res;
+      console.log('distinct y', res);
+    });
   });
+
+  function OneOccConcat(a1, a2) {
+    let unique = new Set(a1);
+
+    for (let i = 0; i < a2.length; i++) {
+      if (!unique.has(a2[i])) {
+        unique.add(a2[i]);
+      }
+    }
+
+    let res = Array.from(unique);
+
+    return res;
+  }
+
+  const categories = OneOccConcat(base_categories, added_categories);
 </script>
 
 <svelte:head>
@@ -73,33 +99,38 @@
 
 <section class="marcelle vertical">
   <div>
-    <div class="conf-row flex-col md:flex-row" bind:this={screenshotElt}>
+    <div class="conf-row-rsp flex-col md:flex-row" bind:this={screenshotElt}>
       <div class="conf-col">
-        <div class="card half max-w-full">
-          <div use:marcelle={input} />
-          <div class="flex grow justify-center items-center">
+        <div class="card">
+          <div class="marcelle-input notitle" use:marcelle={input} />
+          <div class="flex justify-center items-center pt-2">
             <div class="notitle" use:marcelle={inputDisplay} />
           </div>
+          <button
+            class="hidden md:block my-8 mx-16 btn btn-primary"
+            on:click={() => {
+              showShareData = true;
+            }}
+          >
+            Teach
+          </button>
         </div>
       </div>
       <div class="card" use:marcelle={myConfidences} />
     </div>
-    <div class="conf-row half max-w-full">
+    <div class="conf-row">
       <button
-        class="btn btn-primary"
+        class="block md:hidden my-8 mx-16 btn btn-primary"
         on:click={() => {
           showShareData = true;
         }}
       >
-        Use Image for Teaching
+        Teach
       </button>
+      {#if !demoMode}
+        <button class="btn btn-primary" on:click={openInsightModal}> Share insight</button>
+      {/if}
     </div>
-  </div>
-  <div class="conf-row">
-    <button class="btn btn-primary" on:click={openInsightModal}>
-      Share Insight with the Group
-    </button>
-    <!-- <button class="button export" on:click={openInsightModal}>Share Insight with the Group</button> -->
   </div>
   {#if showShareData}
     <Modal
@@ -116,15 +147,14 @@
             on:value={({ detail }) => {
               label.$value.set(detail);
             }}
-            invalid={!categories.includes($currentLabel)}
           />
           <div class="modal-row">
             <button
               class="btn btn-secondary"
-              disabled={!categories.includes($currentLabel)}
+              disabled={!$currentLabel}
               on:click={() => capture.$click.set(undefined)}
             >
-              Record image
+              Record
             </button>
             <button
               class="btn btn-outline btn-error"
@@ -160,7 +190,7 @@
                 });
               }}
             >
-              Share with the group
+              Share
             </button>
             <button
               class="btn btn-outline btn-error"
@@ -178,6 +208,15 @@
 </section>
 
 <style>
+  @media (min-width: 768px) {
+    .conf-row-rsp {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  .btn {
+    scale: 1.25;
+  }
   .vertical {
     min-height: calc(100vh - 6rem);
     display: flex;
@@ -188,8 +227,9 @@
 
   .conf-row {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     width: 100%;
+    margin-top: 16px;
   }
 
   .card {
@@ -199,10 +239,6 @@
   .conf-col {
     display: flex;
     flex-direction: column;
-  }
-
-  .half {
-    width: 500px;
   }
 
   .modal-header {

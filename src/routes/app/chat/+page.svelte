@@ -1,11 +1,12 @@
 <script>
-  import { activity } from '$lib/marcelle/components';
+  //import { activity } from '$lib/marcelle/components';
+  import { activityMobile } from '$lib/marcelle/components';
   import { comments, newMessages, store } from '$lib/marcelle';
   import { marcelle } from '$lib/utils';
   import { onMount } from 'svelte';
   import { logEvent } from '$lib/marcelle/log';
 
-  const act = activity(comments, store);
+  const act = activityMobile(comments, store);
 
   onMount(() => {
     localStorage.setItem('lastChatViewed', new Date(Date.now()).toISOString());

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import {
     commentsArea,
     exportBtnTrain,
@@ -27,9 +27,10 @@
 
   import html2canvas from 'html2canvas';
   import { onDestroy, onMount } from 'svelte';
+  import { demoMode } from '$lib/config';
 
-  let screenshotElt;
-  let screenshotImg;
+  let screenshotElt: HTMLDivElement;
+  let screenshotImg: string;
 
   function openDataModal() {
     html2canvas(screenshotElt, { scale: 2.5 }).then(function (canvas) {
@@ -80,38 +81,53 @@
 </svelte:head>
 
 <section class="marcelle">
-  <div class="conf-row items-stretch" bind:this={screenshotElt}>
+  <div class="conf-rsp conf-row items-stretch rsp" bind:this={screenshotElt}>
     <div class="card" use:marcelle={myTrainingDataBrowser} />
-    <div class="w-80 flex flex-col justify-between items-center my-2 mx-1">
-      <div class="stats grow">
-        <div class="stat">
-          <div class="stat-title">Overall Accuracy</div>
-          <div class="stat-value text-success w-full">{$accuracy || '??'}%</div>
+    <div class="rsp flex flex-col justify-between items-center my-2 mx-1">
+      <div class="stats rsp justify-center">
+        <div class="stat" align="center">
+          <div class="stat-title font-bold text-xl">Overall Accuracy</div>
+          <div class="stat-value py-4 text-success rsp text-5xl">{$accuracy || '??'}%</div>
           <!-- <div class="stat-desc text-error">XX% better than the collective model</div> -->
           <div class="stat-actions">
-            <button class="btn btn-sm btn-outline btn-accent" on:click={crossValidation}>
+            <button class="btn btn-sm btn-outline btn-accent text-xl" on:click={crossValidation}>
               Recompute Performance
             </button>
           </div>
         </div>
       </div>
-      <div
-        class="tooltip tooltip-bottom m-4"
-        class:tooltip={!$trainingUpToDate}
-        class:tooltip-success={$trainingUpToDate}
-        class:tooltip-warning={!$trainingUpToDate}
-        data-tip="New data has been added, the performance score is outdated"
-      >
-        <button
-          class="btn"
-          class:btn-secondary={$trainingUpToDate}
-          class:btn-disabled={!$trainingUpToDate}
-          style="margin-right: 7%;"
-          on:click={openDataModal}
+      {#if demoMode}
+        <div
+          class="tooltip tooltip-bottom tooltip-warning m-4"
+          data-tip="Data sharing has been disabled for the public demo"
         >
-          Share
-        </button>
-      </div>
+          <button
+            class="btn my-btn btn-disabled"
+            style="margin-right: 7%;"
+            on:click={openDataModal}
+          >
+            Share
+          </button>
+        </div>
+      {:else}
+        <div
+          class="tooltip tooltip-bottom m-4"
+          class:tooltip={!$trainingUpToDate}
+          class:tooltip-success={$trainingUpToDate}
+          class:tooltip-warning={!$trainingUpToDate}
+          data-tip="New data has been added, the performance score is outdated"
+        >
+          <button
+            class="btn my-btn"
+            class:btn-secondary={$trainingUpToDate}
+            class:btn-disabled={!$trainingUpToDate}
+            style="margin-right: 7%;"
+            on:click={openDataModal}
+          >
+            Share
+          </button>
+        </div>
+      {/if}
     </div>
   </div>
 
@@ -142,9 +158,20 @@
 </section>
 
 <style>
+  @media (max-width: 768px) {
+    .conf-rsp {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+    .rsp {
+      width: 100%;
+    }
+  }
   .conf-row {
     display: flex;
-    justify-content: right;
+    justify-content: center;
     width: 100%;
   }
 
@@ -166,5 +193,10 @@
 
   .notitle :global(.card-title) {
     display: none;
+  }
+
+  .my-btn {
+    margin-top: 8px;
+    scale: 1.25;
   }
 </style>
