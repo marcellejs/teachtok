@@ -8,8 +8,13 @@
   import { goto } from '$app/navigation';
   import { store, metaCVModel, $accuracy as accuracy, trainingUpToDate } from '$lib/marcelle';
   import { base } from '$app/paths';
+  import { onMount } from 'svelte';
 
-  export let user: { avatar: string; name: string };
+  let user: { avatar: string; name: string } = {};
+
+  onMount(() => {
+    user = store.user;
+  });
 
   let trainingStatus = metaCVModel.$training
     .map(({ status }) => {
@@ -136,16 +141,15 @@
         <label tabindex="0" class="btn btn-ghost btn-circle avatar" for="">
           <div class="w-10 rounded-full">
             <img
-              src={user?.avatar || 'https://api.lorem.space/image/face?hash=33791'}
+              src={user?.avatar
+                ? `${base}/animals/${user?.avatar}`
+                : 'https://api.lorem.space/image/face?hash=33791'}
               alt="profile pic"
             />
           </div>
         </label>
-        <ul
-          tabindex="0"
-          class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          <li><a href="/settings">Settings</a></li>
+        <ul class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href={base}>Home</a></li>
           <li><button on:click={signout}>Logout</button></li>
         </ul>
       </div>

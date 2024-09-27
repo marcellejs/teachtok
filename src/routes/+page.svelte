@@ -22,17 +22,18 @@
       <span class="lowercase">Teach</span>
       <span class="text-base-content uppercase">TOK</span>
     </h1>
-    <div class="text-2xl text-center my-6 italic">Study of Collaborative Machine Teaching</div>
+    <div class="text-2xl text-center my-6 italic">
+      A Collaborative System for Interactive Machine Teaching
+    </div>
     <section>
-      <h2 class="text-2xl my-6">Goal of the Research Project</h2>
-      <p>
-        This study looks at how a group of people, who are not machine learning specialists, can
-        teach a machine learning system together. The main goal of this project is to understand how
-        people can cooperate to build a classifier that can recognize dance styles or postures from
-        images.
-      </p>
+      <h2 class="text-2xl my-6">
+        Teach an image classifier together to recognize different demos you see tonight!
+      </h2>
+      <!-- <p>
+        With TeachTOK, you can
+      </p> -->
     </section>
-    <section>
+    <!-- <section>
       <h2 class="text-2xl my-6">What we expect from you</h2>
       <p>
         In this study, you will teach a machine learning system to recognize dance styles, postures
@@ -82,7 +83,7 @@
         application whenever you want. You are asked to visit the application regularly, typically
         once a day, so that you can build upon the changes made by others.
       </p>
-    </section>
+    </section> -->
   </section>
   <section class="my-6 text-center">
     {#if data?.user}
@@ -90,8 +91,8 @@
       <a class="btn btn-secondary" href="{base}/mobile/">Mobile Demo</a>
     {:else}
       <a class="btn btn-secondary" href="{base}/auth/login">Log In</a>
-    {/if}
-    {#if data?.user?.role === 'admin'}
+      <!-- {/if}
+    {#if data?.user?.role === 'admin'} -->
       <a class="btn btn-primary" href="{base}/auth/signup">Create an Account</a>
     {/if}
     {#if data?.user}
